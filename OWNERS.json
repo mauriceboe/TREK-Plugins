@@ -1,0 +1,4 @@
+{
+  "_comment": "id -> { boundOwner, repo, firstReviewedAt }. Maintained by publish.yml on merge. Do not hand-edit except for a deliberate owner-change override.",
+  "plugins": {}
+}

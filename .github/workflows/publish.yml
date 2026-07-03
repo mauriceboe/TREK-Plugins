@@ -1,0 +1,60 @@
+name: Publish registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'registry/plugins/**'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+
+      - name: Stamp reviewedAt + bind owners for changed entries
+        run: |
+          set -e
+          today=$(date -u +%Y-%m-%d)
+          for f in $(git diff --name-only HEAD~1 HEAD -- 'registry/plugins/*.json' || true); do
+            [ -f "$f" ] || continue
+            node - "$f" "$today" <<'JS'
+            const fs = require('fs')
+            const [file, today] = process.argv.slice(2)
+            const entry = JSON.parse(fs.readFileSync(file, 'utf8'))
+            const owners = JSON.parse(fs.readFileSync('OWNERS.json', 'utf8'))
+            owners.plugins ||= {}
+            const owner = entry.repo.split('/')[0]
+            // Bind owner on first registration; never silently rewrite an existing binding here.
+            if (!owners.plugins[entry.id]) {
+              owners.plugins[entry.id] = { boundOwner: owner, repo: entry.repo, firstReviewedAt: today }
+            }
+            // Stamp reviewedAt = merge date (a maintainer merged this entry).
+            entry.reviewedAt = today
+            entry.boundOwner = owners.plugins[entry.id].boundOwner
+            fs.writeFileSync(file, JSON.stringify(entry, null, 2) + '\n')
+            fs.writeFileSync('OWNERS.json', JSON.stringify(owners, null, 2) + '\n')
+            console.log('stamped', entry.id, '->', today)
+JS
+          done
+
+      - name: Rebuild aggregated dist/index.json
+        run: node build/aggregate.mjs
+
+      - name: Commit generated files
+        run: |
+          if git diff --quiet dist/ OWNERS.json registry/; then
+            echo "nothing to publish"; exit 0
+          fi
+          git config user.name "trek-plugins-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add dist/ OWNERS.json registry/
+          git commit -m "chore(registry): publish dist/index.json + stamp reviewedAt [skip ci]"
+          git push

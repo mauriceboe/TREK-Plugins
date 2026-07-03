@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mauriceboe/TREK-Plugins/schema/registry.schema.json",
+  "title": "TREK aggregated registry (dist/index.json)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "generatedAt", "plugins"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "plugins": {
+      "type": "array",
+      "items": { "$ref": "plugin-entry.schema.json" }
+    }
+  }
+}

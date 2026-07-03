@@ -1,0 +1,74 @@
+name: Validate plugin submissions
+
+on:
+  pull_request:
+    paths:
+      - 'registry/plugins/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reject changes to dist/ (generated)
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          if git diff --name-only "$base"...HEAD | grep -q '^dist/'; then
+            echo "::error::Do not edit dist/ — it is generated on merge by publish.yml."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Determine changed plugin entries
+        id: changed
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          files=$(git diff --name-only --diff-filter=ACM "$base"...HEAD -- 'registry/plugins/*.json' || true)
+          echo "files<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$files" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+          if [ -z "$files" ]; then echo "::notice::No plugin entries changed."; fi
+
+      - name: Validate each entry
+        if: steps.changed.outputs.files != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            echo "::group::Validating $f"
+            id=$(basename "$f" .json)
+            repo=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$f','utf8')).repo)")
+            tag=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[v.length-1].gitTag)")
+            commit=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[v.length-1].commitSha)")
+
+            # entry: schema, id, namespace, owner binding, homoglyph, release, sha, native scan
+            node scripts/validate-entry.mjs "$f"
+
+            # README: fetch the plugin's manifest at the pinned commit for permission parity
+            man=$(mktemp)
+            curl -fsSL "https://raw.githubusercontent.com/$repo/$commit/trek-plugin.json" -o "$man" || echo '{}' > "$man"
+            node scripts/check-readme.mjs "$repo" "$commit" "$man"
+            echo "::endgroup::"
+          done <<< "${{ steps.changed.outputs.files }}"
+
+      - name: Verify dist/index.json is in sync
+        run: |
+          node build/aggregate.mjs
+          if ! git diff --quiet dist/index.json; then
+            echo "::warning::dist/index.json will be regenerated on merge (this is expected for a new entry)."
+            git checkout -- dist/ || true
+          fi
