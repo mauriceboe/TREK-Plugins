@@ -1,0 +1,25 @@
+{
+  "id": "trip-countdown",
+  "name": "Trip Countdown",
+  "author": "TREK",
+  "description": "A dashboard widget counting down the days to your next trip.",
+  "repo": "mauriceboe/trek-plugin-trip-countdown",
+  "homepage": "https://github.com/mauriceboe/trek-plugin-trip-countdown",
+  "tags": ["widget", "trips"],
+  "type": "widget",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "gitTag": "v1.0.0",
+      "commitSha": "3984399d8c32a97cd47882bc48220db56d76b186",
+      "downloadUrl": "https://github.com/mauriceboe/trek-plugin-trip-countdown/releases/download/v1.0.0/plugin.zip",
+      "sha256": "364efc12f5252af6a6c37b50e50f0ed76e76d7ddbef17b15b6c32859ed32c719",
+      "minTrekVersion": "3.2.0",
+      "maxTrekVersion": null,
+      "size": 3558,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-03T00:00:00Z"
+    }
+  ]
+}
