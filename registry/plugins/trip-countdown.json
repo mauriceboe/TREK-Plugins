@@ -12,6 +12,19 @@
   "type": "widget",
   "versions": [
     {
+      "version": "1.0.1",
+      "gitTag": "v1.0.1",
+      "commitSha": "50db94ae8455c4fba83ee6b813eccef376b3d0d2",
+      "downloadUrl": "https://github.com/mauriceboe/trek-plugin-trip-countdown/releases/download/v1.0.1/plugin.zip",
+      "sha256": "86a1a4d0d309943840b991d720a026d8a18ab9ca27309e9bd7b46c0fae7257a2",
+      "minTrekVersion": "3.2.0",
+      "maxTrekVersion": null,
+      "size": 3562,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-03T00:00:00Z"
+    },
+    {
       "version": "1.0.0",
       "gitTag": "v1.0.0",
       "commitSha": "3984399d8c32a97cd47882bc48220db56d76b186",
