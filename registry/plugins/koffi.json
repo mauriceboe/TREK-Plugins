@@ -1,0 +1,25 @@
+{
+  "id": "koffi",
+  "name": "Koffi",
+  "author": "TREK",
+  "description": "Koffi, the tiny suitcase mascot, lives on your boarding pass — strolling, rolling, collecting stickers, and getting more excited the closer your trip gets.",
+  "repo": "mauriceboe/trek-plugin-koffi",
+  "homepage": "https://github.com/mauriceboe/trek-plugin-koffi",
+  "tags": ["widget", "mascot", "fun"],
+  "type": "widget",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "gitTag": "v1.0.0",
+      "commitSha": "749db9fb2e229f3f36dbfc2d81e33a821a55c359",
+      "downloadUrl": "https://github.com/mauriceboe/trek-plugin-koffi/releases/download/v1.0.0/plugin.zip",
+      "sha256": "3172d9b240ef4de3b0c2465a9f59096bd01cb6af93527580af8445fab0f1752c",
+      "minTrekVersion": "3.2.0",
+      "maxTrekVersion": null,
+      "size": 215481,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-03T00:00:00Z"
+    }
+  ]
+}
