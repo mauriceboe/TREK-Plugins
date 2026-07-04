@@ -1,12 +1,11 @@
 // TREK-Plugins registry: entry validation gate.
-// Validates one registry/plugins/<id>.json: schema, id/filename, namespace,
-// owner binding, homoglyph/mixed-script, and — over the network — that the
-// release exists, the manifest matches, the artifact's SHA-256 matches the pin,
-// and the artifact contains no native binaries.
+// Validates one registry/plugins/<id>.json: schema, id/filename, owner binding,
+// homoglyph/mixed-script, and — over the network — that the release exists, the
+// manifest matches, the artifact's SHA-256 matches the pin, and the artifact
+// contains no native binaries.
 //
 // Usage:  node scripts/validate-entry.mjs registry/plugins/<id>.json
-// Env:    ALLOW_RESERVED=1        allow a reserved-namespace id (maintainer)
-//         ALLOW_OWNER_CHANGE=1    allow rebinding an existing id to a new owner
+// Env:    ALLOW_OWNER_CHANGE=1    allow rebinding an existing id to a new owner
 //         GITHUB_TOKEN            raises GitHub API rate limits (optional)
 //         SKIP_NETWORK=1          offline mode (schema/format checks only)
 
@@ -42,13 +41,6 @@ if (!validate(entry)) for (const e of validate.errors) bad(`schema: ${e.instance
 // --- id === filename ---
 const fileId = path.basename(entryPath).replace(/\.json$/, '')
 if (entry.id && entry.id !== fileId) bad(`id "${entry.id}" must equal filename "${fileId}"`)
-
-// --- reserved namespace ---
-const reserved = (await readFile(path.join(ROOT, 'RESERVED_NAMESPACES.txt'), 'utf8'))
-  .split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#'))
-if (entry.id && reserved.some((p) => entry.id.startsWith(p)) && process.env.ALLOW_RESERVED !== '1') {
-  bad(`id "${entry.id}" uses a reserved namespace (${reserved.join(', ')})`)
-}
 
 // --- homoglyph / mixed-script name ---
 // Reject a name that mixes Latin with Cyrillic/Greek look-alikes (spoofing).

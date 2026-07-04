@@ -1,5 +1,0 @@
-# Reserved plugin-id prefixes. An id starting with any of these is rejected by CI
-# unless the PR is merged with the ALLOW_RESERVED override by a maintainer.
-# Reserved for TREK-org / official plugins.
-trek-
-official-

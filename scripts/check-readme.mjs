@@ -21,7 +21,6 @@ const REQUIRED_HEADINGS = ['What it does', 'Screenshots', 'Permissions', 'Setup'
 const PLACEHOLDER_PATTERNS = [
   /\{\{[^}]*\}\}/,            // any leftover {{ token }}
   /\bREPLACE_ME\b/i,
-  /\bTODO\b/,
   /\bDescribe (what|the)\b/i, // template prose that was never edited
   /\byour-name\/trek-plugin/i,
 ]

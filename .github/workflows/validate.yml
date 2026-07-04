@@ -52,8 +52,9 @@ jobs:
             echo "::group::Validating $f"
             id=$(basename "$f" .json)
             repo=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$f','utf8')).repo)")
-            tag=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[v.length-1].gitTag)")
-            commit=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[v.length-1].commitSha)")
+            # versions are newest-first, so v[0] is the version this PR is publishing
+            tag=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[0].gitTag)")
+            commit=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[0].commitSha)")
 
             # entry: schema, id, namespace, owner binding, homoglyph, release, sha, native scan
             node scripts/validate-entry.mjs "$f"

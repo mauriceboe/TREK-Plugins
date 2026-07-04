@@ -36,13 +36,18 @@ opening a pull request.
    you must fill in (the CI enforces this — see below).
 
 2. **Tag a release.** The git tag (`v1.2.0`) must equal `version` in your
-   `trek-plugin.json`. Attach a `plugin.zip` release asset, or use the codeload
-   source archive for build-free plugins.
+   `trek-plugin.json`. Attach a built **`plugin.zip`** release asset — that is the
+   supported path, because the registry pins its exact SHA-256. (GitHub's
+   auto-generated source archives are not byte-stable, so a pinned hash of one can
+   later fail; don't rely on them.)
 
-3. **Validate locally** (same checks as CI):
+3. **Validate the manifest locally:**
    ```
    npx trek-plugin validate
    ```
+   This runs the same manifest rules the server loader uses. The registry's full
+   CI additionally checks the release tag, the artifact SHA-256, the README and
+   the owner binding over the network on your PR.
 
 4. **Fork this repo, then open a PR** adding `registry/plugins/<your-id>.json`.
    You don't have write access here, so add your entry in your fork and open the
@@ -54,12 +59,12 @@ opening a pull request.
 ## What CI checks (each is a hard gate)
 
 **Entry** (`scripts/validate-entry.mjs`): JSON schema · `id` matches filename and
-is a valid slug · reserved namespaces (`trek-`, `official-`) blocked · **owner/repo
-binding** (an existing plugin id can't be repointed to a different owner) ·
-homoglyph / mixed-script names blocked · release tag exists · manifest parity
-(`id`/`version`/`type`/`apiVersion` match) · **SHA-256 of the downloaded artifact
-matches the pin** · **no native `.node` binaries** (forbidden in v1) · `egress[]`
-present and non-wildcard when `http:outbound` is declared.
+is a valid slug · **owner/repo binding** (an existing plugin id can't be repointed
+to a different owner) · homoglyph / mixed-script names blocked · release tag exists ·
+manifest parity (`id`/`version`/`type`/`apiVersion` match) · **SHA-256 of the
+downloaded artifact matches the pin** · **no native `.node` binaries** (forbidden in
+v1) · `egress[]` present and non-wildcard when `http:outbound` is declared · an
+optional author signature (minisign) is verified when present.
 
 **README** (`scripts/check-readme.mjs`): a `README.md` exists · has the required
 sections (*What it does / Screenshots / Permissions / Setup*) · contains **at least
@@ -67,12 +72,13 @@ one screenshot that actually resolves to an image** · has real written content
 (not just the template) · **no leftover `{{placeholder}}` tokens** · every declared
 permission is explained. A stub or image-less README is rejected.
 
-## Namespaces
+## Plugin ids
 
-`trek-` and `official-` are reserved for TREK-org plugins (see
-[`RESERVED_NAMESPACES.txt`](./RESERVED_NAMESPACES.txt)). Plugin `id`s are bound to
-their GitHub owner on first registration ([`OWNERS.json`](./OWNERS.json)); changing
-the owner later needs a maintainer override.
+Any `id` is fine — nothing is reserved. Pick a short, descriptive slug; it just
+has to be unique in the registry and match your entry's filename. On first
+registration an `id` is bound to its GitHub owner ([`OWNERS.json`](./OWNERS.json))
+so nobody else can repoint your plugin to a different repo later; changing the
+owner needs a maintainer override.
 
 ## License
 
