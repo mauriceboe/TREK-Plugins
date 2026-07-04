@@ -1,0 +1,24 @@
+{
+  "id": "luggage-tag",
+  "name": "Luggage Tag",
+  "author": "mauriceboe",
+  "description": "A luggage tag on your dashboard with a rotating travel motto.",
+  "repo": "mauriceboe/trek-plugin-luggage-tag",
+  "type": "widget",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "gitTag": "v1.0.0",
+      "commitSha": "02b76c526f89e98015d29b281e3fdbc5242adb40",
+      "downloadUrl": "https://github.com/mauriceboe/trek-plugin-luggage-tag/releases/download/v1.0.0/plugin.zip",
+      "sha256": "102f6ed56d4f79539b1061ef8c351559f802af80932654971f7bdf046a2496bb",
+      "minTrekVersion": "3.2.0",
+      "size": 3183,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-04T19:41:28.103Z",
+      "signature": "a1wPC1OQjVHZA3yYehK6tW9D9YmkLNh3UtYJqr9+eud4Sos7vknHA13W2vM4iFntZVmVIDm4VsPi3ntO2KdcCQ=="
+    }
+  ],
+  "authorPublicKey": "PRt5GcEStofvO9tdeSBNX8SwWs2IE06g4uq4BQ9yUds="
+}
