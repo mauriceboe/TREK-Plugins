@@ -13,6 +13,19 @@
   "type": "widget",
   "versions": [
     {
+      "version": "1.0.1",
+      "gitTag": "v1.0.1",
+      "commitSha": "fedcf81d2fc13a331fdfa49662fcbef9c3d51fb8",
+      "downloadUrl": "https://github.com/mauriceboe/trek-plugin-koffi/releases/download/v1.0.1/plugin.zip",
+      "sha256": "bb475f519769c757a6e28f00ae8cf1ef401c512d4dc39c65589ce8743d2c1315",
+      "minTrekVersion": "3.2.0",
+      "maxTrekVersion": null,
+      "size": 943257,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-04T00:00:00Z"
+    },
+    {
       "version": "1.0.0",
       "gitTag": "v1.0.0",
       "commitSha": "749db9fb2e229f3f36dbfc2d81e33a821a55c359",
@@ -26,6 +39,6 @@
       "publishedAt": "2026-07-03T00:00:00Z"
     }
   ],
-  "reviewedAt": "2026-07-03",
+  "reviewedAt": "2026-07-04",
   "boundOwner": "mauriceboe"
 }
