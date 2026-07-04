@@ -1,0 +1,24 @@
+{
+  "id": "paper-plane",
+  "name": "Paper Plane",
+  "author": "mauriceboe",
+  "description": "A tiny paper plane on your dashboard that logs its flights.",
+  "repo": "mauriceboe/trek-plugin-paper-plane",
+  "type": "widget",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "gitTag": "v1.0.0",
+      "commitSha": "d76975c8787ea681600c9202f4f20393d33fb7dd",
+      "downloadUrl": "https://github.com/mauriceboe/trek-plugin-paper-plane/releases/download/v1.0.0/plugin.zip",
+      "sha256": "6f5e803e3e93084bba456b3e172ca4a0fb1f00b83099e2d99236dbdaed760bd1",
+      "minTrekVersion": "3.2.0",
+      "size": 2957,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-04T18:21:23.026Z",
+      "signature": "1teMbDvNm3alWqj8F0A2OrRhcSDtmh+5fJACpWvbRmuQC3cnd8rA7LQk5x8IlZQBzw5Ryjfzcktxve6YTk+0DA=="
+    }
+  ],
+  "authorPublicKey": "/NUaV0hwTifs25jaleiWntBxlnT0Ol9zgzJabFc/7l0="
+}
