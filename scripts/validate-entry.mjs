@@ -100,6 +100,16 @@ if (process.env.SKIP_NETWORK !== '1' && entry.repo && Array.isArray(entry.versio
           if (!egress.length) bad(`${v.version}: http:outbound declared but egress[] is empty`)
           if (egress.includes('*')) bad(`${v.version}: egress[] must not contain a bare "*" wildcard`)
         }
+        // dependency parity: the enriched entry must mirror the manifest so TREK can
+        // resolve deps from the index before downloading.
+        const normAddons = (a) => (Array.isArray(a) ? [...a].map(String).sort() : [])
+        if (JSON.stringify(normAddons(m.requiredAddons)) !== JSON.stringify(normAddons(v.requiredAddons))) {
+          bad(`${v.version}: manifest requiredAddons != entry requiredAddons`)
+        }
+        const normDeps = (d) => (Array.isArray(d) ? d.map((x) => `${x?.id}@${x?.version}`).sort() : [])
+        if (JSON.stringify(normDeps(m.pluginDependencies)) !== JSON.stringify(normDeps(v.pluginDependencies))) {
+          bad(`${v.version}: manifest pluginDependencies != entry pluginDependencies`)
+        }
       }
     } catch (e) { bad(`${v.version}: manifest parity failed: ${e.message}`) }
 

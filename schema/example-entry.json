@@ -19,7 +19,11 @@
       "size": 184320,
       "apiVersion": 1,
       "nativeModules": false,
-      "publishedAt": "2026-06-18T12:00:00Z"
+      "publishedAt": "2026-06-18T12:00:00Z",
+      "requiredAddons": ["budget"],
+      "pluginDependencies": [
+        { "id": "koffi", "version": ">=1.0.0 <2.0.0" }
+      ]
     }
   ]
 }
