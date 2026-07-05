@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-04T11:31:12.286Z",
+  "generatedAt": "2026-07-05T11:20:16.150Z",
   "plugins": [
     {
       "id": "koffi",
@@ -45,6 +45,31 @@
       ],
       "reviewedAt": "2026-07-04",
       "boundOwner": "mauriceboe"
+    },
+    {
+      "id": "trekichiki",
+      "name": "Famichiki Counter",
+      "author": "fbnlrz",
+      "description": "Tally every Famichiki you eat on your trip — FamilyMart Japan's legendary fried-chicken snack, counted right on your dashboard.",
+      "repo": "fbnlrz/trekichiki",
+      "type": "widget",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "gitTag": "v1.0.0",
+          "commitSha": "667b155255920d1f8b96d17815a261f46fa2c309",
+          "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.0/plugin.zip",
+          "sha256": "25314b8654da3383d0c85800d59ec516bc5a246e7172b712635a06690d2c98e3",
+          "minTrekVersion": "3.2.0",
+          "size": 9506,
+          "apiVersion": 1,
+          "nativeModules": false,
+          "publishedAt": "2026-07-05T10:43:57.807Z"
+        }
+      ],
+      "homepage": "https://github.com/fbnlrz/trekichiki",
+      "reviewedAt": "2026-07-05",
+      "boundOwner": "fbnlrz"
     }
   ]
 }

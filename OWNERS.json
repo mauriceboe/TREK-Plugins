@@ -10,6 +10,11 @@
       "boundOwner": "mauriceboe",
       "repo": "mauriceboe/trek-plugin-koffi",
       "firstReviewedAt": "2026-07-03"
+    },
+    "trekichiki": {
+      "boundOwner": "fbnlrz",
+      "repo": "fbnlrz/trekichiki",
+      "firstReviewedAt": "2026-07-05"
     }
   }
 }
