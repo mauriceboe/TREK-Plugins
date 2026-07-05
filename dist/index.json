@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-05T11:20:16.150Z",
+  "generatedAt": "2026-07-05T11:47:44.682Z",
   "plugins": [
     {
       "id": "koffi",
@@ -54,6 +54,18 @@
       "repo": "fbnlrz/trekichiki",
       "type": "widget",
       "versions": [
+        {
+          "version": "1.0.1",
+          "gitTag": "v1.0.1",
+          "commitSha": "fc6c6db401cbadd244a94280b59c26fa7c6effee",
+          "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.1/plugin.zip",
+          "sha256": "5f31ee6726141ce37ddd22bd5f04d68e8e1878fb8b1232bab47cbf149e8071f3",
+          "minTrekVersion": "3.2.0",
+          "size": 9573,
+          "apiVersion": 1,
+          "nativeModules": false,
+          "publishedAt": "2026-07-05T11:36:22.659Z"
+        },
         {
           "version": "1.0.0",
           "gitTag": "v1.0.0",
