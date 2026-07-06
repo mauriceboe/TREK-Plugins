@@ -45,6 +45,7 @@ jobs:
         if: steps.changed.outputs.files != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANGED: ${{ steps.changed.outputs.files }}
         run: |
           set -e
           while IFS= read -r f; do
@@ -64,7 +65,7 @@ jobs:
             curl -fsSL "https://raw.githubusercontent.com/$repo/$commit/trek-plugin.json" -o "$man" || echo '{}' > "$man"
             node scripts/check-readme.mjs "$repo" "$commit" "$man"
             echo "::endgroup::"
-          done <<< "${{ steps.changed.outputs.files }}"
+          done <<< "$CHANGED"
 
       - name: Verify dist/index.json is in sync
         run: |
