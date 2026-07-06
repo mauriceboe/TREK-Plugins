@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-06T00:18:53.139Z",
+  "generatedAt": "2026-07-06T12:52:44.522Z",
   "plugins": [
     {
       "id": "budget-table",
@@ -96,6 +96,58 @@
       ],
       "homepage": "https://github.com/fbnlrz/nihongo-nugget",
       "reviewedAt": "2026-07-05",
+      "boundOwner": "fbnlrz"
+    },
+    {
+      "id": "suica-saver",
+      "name": "Suica Saver",
+      "author": "fbnlrz",
+      "description": "Track your Suica/Pasmo/ICOCA balance manually: book charges and spends, get warned before it runs low.",
+      "repo": "fbnlrz/suica-saver",
+      "type": "widget",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "gitTag": "v1.0.0",
+          "commitSha": "e7c4fc1f7dfcf3ebe447b5a9544e75e7b5831ce7",
+          "downloadUrl": "https://github.com/fbnlrz/suica-saver/releases/download/v1.0.0/plugin.zip",
+          "sha256": "80ea36258ac700c07ad06f38354e55aed7bb5702aa4638602a01cfb306c890e0",
+          "minTrekVersion": "3.2.0",
+          "size": 9972,
+          "apiVersion": 1,
+          "nativeModules": false,
+          "publishedAt": "2026-07-05T21:07:59.988Z",
+          "signature": "ugwHDtjWwenLdpGrbmnJOFO2l0VMyfnuCGORkOgbJHyy6MpcfGZ8FSBjUsk55R8DAvr1zyoezE7tcMU+6jmZCQ=="
+        }
+      ],
+      "homepage": "https://github.com/fbnlrz/suica-saver",
+      "authorPublicKey": "kdvtL1DEM+p49J1eVKTwDl//BFzRFJcOtkDoc0Ay2bM=",
+      "reviewedAt": "2026-07-06",
+      "boundOwner": "fbnlrz"
+    },
+    {
+      "id": "trek-x-japan",
+      "name": "TREK × Japan",
+      "author": "fbnlrz",
+      "description": "A collaborative in-trip hub for Japan",
+      "repo": "fbnlrz/trek-x-japan",
+      "type": "trip-page",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "gitTag": "v1.0.0",
+          "commitSha": "2fc6d0d5c96411da2c20d52a87a3342ac8f989ad",
+          "downloadUrl": "https://github.com/fbnlrz/trek-x-japan/releases/download/v1.0.0/plugin.zip",
+          "sha256": "2fa3530fc2811c1ac69aca7678cb9adde76d936655b5fe89c2e8d0e06356576e",
+          "minTrekVersion": "3.2.1",
+          "size": 54581,
+          "apiVersion": 1,
+          "nativeModules": false,
+          "publishedAt": "2026-07-06T00:14:58.028Z"
+        }
+      ],
+      "homepage": "https://github.com/fbnlrz/trek-x-japan",
+      "reviewedAt": "2026-07-06",
       "boundOwner": "fbnlrz"
     },
     {
