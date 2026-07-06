@@ -1,0 +1,37 @@
+name: Collect download stats
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Collect release download counts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/collect-stats.mjs
+
+      - name: Rebuild aggregated dist/index.json
+        run: node build/aggregate.mjs
+
+      - name: Commit updated stats
+        run: |
+          if git diff --quiet registry/stats.json dist/; then
+            echo "counts unchanged"; exit 0
+          fi
+          git config user.name "trek-plugins-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add registry/stats.json dist/
+          git commit -m "chore(stats): refresh plugin download counts [skip ci]"
+          git push

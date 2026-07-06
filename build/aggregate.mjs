@@ -24,10 +24,17 @@ const files = (await readdir(PLUGINS_DIR).catch(() => []))
   .filter((f) => f.endsWith('.json'))
   .sort()
 
+// Download counts collected by scripts/collect-stats.mjs (stats.yml cron);
+// merged here so instances get popularity with the same single catalog fetch.
+const stats = await readFile(path.join(ROOT, 'registry', 'stats.json'), 'utf8')
+  .then((s) => JSON.parse(s).plugins || {})
+  .catch(() => ({}))
+
 const plugins = []
 for (const f of files) {
   const entry = JSON.parse(await readFile(path.join(PLUGINS_DIR, f), 'utf8'))
   entry.versions.sort((x, y) => cmpSemverDesc(x.version, y.version))
+  if (typeof stats[entry.id] === 'number') entry.downloadCount = stats[entry.id]
   plugins.push(entry)
 }
 plugins.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
