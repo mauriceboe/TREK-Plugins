@@ -36,9 +36,11 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Stamp reviewedAt + bind owners
+        env:
+          CHANGED: ${{ steps.changed.outputs.files }}
         run: |
           today="$(date -u +%Y-%m-%d)"
-          TODAY="$today" node scripts/publish-stamp.mjs ${{ steps.changed.outputs.files }}
+          echo "$CHANGED" | xargs -r env TODAY="$today" node scripts/publish-stamp.mjs
 
       - name: Rebuild aggregated dist/index.json
         run: node build/aggregate.mjs

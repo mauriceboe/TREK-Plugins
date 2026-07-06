@@ -25,6 +25,16 @@
       "boundOwner": "jubnl",
       "repo": "jubnl/Trek_Plugin-Budget_Table",
       "firstReviewedAt": "2026-07-06"
+    },
+    "suica-saver": {
+      "boundOwner": "fbnlrz",
+      "repo": "fbnlrz/suica-saver",
+      "firstReviewedAt": "2026-07-06"
+    },
+    "trek-x-japan": {
+      "boundOwner": "fbnlrz",
+      "repo": "fbnlrz/trek-x-japan",
+      "firstReviewedAt": "2026-07-06"
     }
   }
 }
