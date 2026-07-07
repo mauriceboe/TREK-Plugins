@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-07T07:33:31.394Z",
+  "generatedAt": "2026-07-07T12:52:45.595Z",
   "plugins": [
     {
       "id": "budget-table",
@@ -138,6 +138,18 @@
       "type": "trip-page",
       "versions": [
         {
+          "version": "1.2.0",
+          "gitTag": "v1.2.0",
+          "commitSha": "df8c977e42b1bad85f4afae78820490f64f05f77",
+          "downloadUrl": "https://github.com/fbnlrz/trek-x-japan/releases/download/v1.2.0/plugin.zip",
+          "sha256": "5ba9a187c3fa5c5721a943b84b39eca96383ef0331cc73bc944f30bf5f2a0562",
+          "minTrekVersion": "3.2.1",
+          "size": 79830,
+          "apiVersion": 1,
+          "nativeModules": false,
+          "publishedAt": "2026-07-07T12:47:58.000Z"
+        },
+        {
           "version": "1.0.0",
           "gitTag": "v1.0.0",
           "commitSha": "2fc6d0d5c96411da2c20d52a87a3342ac8f989ad",
@@ -151,7 +163,7 @@
         }
       ],
       "homepage": "https://github.com/fbnlrz/trek-x-japan",
-      "reviewedAt": "2026-07-06",
+      "reviewedAt": "2026-07-07",
       "boundOwner": "fbnlrz",
       "downloadCount": 38
     },
