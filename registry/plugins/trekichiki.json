@@ -7,6 +7,18 @@
   "type": "widget",
   "versions": [
     {
+      "version": "1.0.3",
+      "gitTag": "v1.0.3",
+      "commitSha": "4bbbe1608d116b9bd3bf335ce81252e5e64c1083",
+      "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.3/plugin.zip",
+      "sha256": "6bf5c54f249722bab81b1837a82aafa503b93fb58fd2a8bdd90791a8f5c1eb05",
+      "minTrekVersion": "3.2.0",
+      "size": 10934,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-07T19:59:00.900Z"
+    },
+    {
       "version": "1.0.2",
       "gitTag": "v1.0.2",
       "commitSha": "d77ae277ba7df7d298795cc6aaf929e777875e45",
