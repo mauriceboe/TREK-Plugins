@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-08T06:08:55.244Z",
+  "generatedAt": "2026-07-09T06:57:00.845Z",
   "plugins": [
     {
       "id": "budget-table",
@@ -28,7 +28,7 @@
       ],
       "reviewedAt": "2026-07-06",
       "boundOwner": "jubnl",
-      "downloadCount": 71
+      "downloadCount": 86
     },
     {
       "id": "koffi",
@@ -73,7 +73,7 @@
       ],
       "reviewedAt": "2026-07-04",
       "boundOwner": "mauriceboe",
-      "downloadCount": 140
+      "downloadCount": 155
     },
     {
       "id": "nihongo-nugget",
@@ -99,7 +99,7 @@
       "homepage": "https://github.com/fbnlrz/nihongo-nugget",
       "reviewedAt": "2026-07-05",
       "boundOwner": "fbnlrz",
-      "downloadCount": 34
+      "downloadCount": 37
     },
     {
       "id": "suica-saver",
@@ -127,7 +127,7 @@
       "authorPublicKey": "kdvtL1DEM+p49J1eVKTwDl//BFzRFJcOtkDoc0Ay2bM=",
       "reviewedAt": "2026-07-06",
       "boundOwner": "fbnlrz",
-      "downloadCount": 18
+      "downloadCount": 25
     },
     {
       "id": "trek-x-japan",
@@ -165,7 +165,7 @@
       "homepage": "https://github.com/fbnlrz/trek-x-japan",
       "reviewedAt": "2026-07-07",
       "boundOwner": "fbnlrz",
-      "downloadCount": 59
+      "downloadCount": 74
     },
     {
       "id": "trekichiki",
@@ -227,7 +227,7 @@
       "homepage": "https://github.com/fbnlrz/trekichiki",
       "reviewedAt": "2026-07-07",
       "boundOwner": "fbnlrz",
-      "downloadCount": 38
+      "downloadCount": 40
     }
   ]
 }
