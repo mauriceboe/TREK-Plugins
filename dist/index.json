@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-11T20:57:08.780Z",
+  "generatedAt": "2026-07-11T21:15:17.101Z",
   "plugins": [
     {
       "id": "budget-table",
@@ -28,7 +28,7 @@
       ],
       "reviewedAt": "2026-07-06",
       "boundOwner": "jubnl",
-      "downloadCount": 105
+      "downloadCount": 113
     },
     {
       "id": "koffi",
@@ -73,7 +73,7 @@
       ],
       "reviewedAt": "2026-07-04",
       "boundOwner": "mauriceboe",
-      "downloadCount": 165
+      "downloadCount": 175
     },
     {
       "id": "nihongo-nugget",
@@ -99,7 +99,7 @@
       "homepage": "https://github.com/fbnlrz/nihongo-nugget",
       "reviewedAt": "2026-07-05",
       "boundOwner": "fbnlrz",
-      "downloadCount": 41
+      "downloadCount": 43
     },
     {
       "id": "suica-saver",
@@ -127,7 +127,7 @@
       "authorPublicKey": "kdvtL1DEM+p49J1eVKTwDl//BFzRFJcOtkDoc0Ay2bM=",
       "reviewedAt": "2026-07-06",
       "boundOwner": "fbnlrz",
-      "downloadCount": 29
+      "downloadCount": 33
     },
     {
       "id": "trek-gotify",
@@ -155,7 +155,8 @@
       "homepage": "https://github.com/jubnl/trek-gotify",
       "authorPublicKey": "YgFVo9ES55xz9m0/0Thh5sgx/IlVaaU2r0hScEawgiA=",
       "reviewedAt": "2026-07-11",
-      "boundOwner": "jubnl"
+      "boundOwner": "jubnl",
+      "downloadCount": 5
     },
     {
       "id": "trek-x-japan",
@@ -193,7 +194,7 @@
       "homepage": "https://github.com/fbnlrz/trek-x-japan",
       "reviewedAt": "2026-07-07",
       "boundOwner": "fbnlrz",
-      "downloadCount": 90
+      "downloadCount": 98
     },
     {
       "id": "trekichiki",
@@ -255,7 +256,7 @@
       "homepage": "https://github.com/fbnlrz/trekichiki",
       "reviewedAt": "2026-07-07",
       "boundOwner": "fbnlrz",
-      "downloadCount": 43
+      "downloadCount": 48
     },
     {
       "id": "wiki-place-context",
@@ -281,7 +282,7 @@
       "homepage": "https://github.com/raduwolf12/wiki-place-context",
       "reviewedAt": "2026-07-10",
       "boundOwner": "raduwolf12",
-      "downloadCount": 47
+      "downloadCount": 67
     }
   ]
 }
