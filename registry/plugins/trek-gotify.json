@@ -1,0 +1,26 @@
+{
+  "id": "trek-gotify",
+  "name": "Gotify",
+  "author": "jubnl",
+  "description": "Deliver your TREK notifications to a self-hosted Gotify server.",
+  "repo": "jubnl/trek-gotify",
+  "type": "integration",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "gitTag": "v1.0.0",
+      "commitSha": "628aa6b0b647c5357391ebe00d3df013ae1e8138",
+      "downloadUrl": "https://github.com/jubnl/trek-gotify/releases/download/v1.0.0/plugin.zip",
+      "sha256": "4790b777c68921615405013dab51eaf29b2050081280f2b9d6ee139e441d07e3",
+      "minTrekVersion": "3.3.0",
+      "size": 5622,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-11T20:50:38.986Z",
+      "operatorEgress": true,
+      "signature": "DcLKNRGZTuUv1CoEi7OLCt0oFZItzaTSqzE4mAPlzZhzE7ioNEZa9Ckd/X1f+L3zsfctKTH6UVCd0t7a6yCcCA=="
+    }
+  ],
+  "homepage": "https://github.com/jubnl/trek-gotify",
+  "authorPublicKey": "YgFVo9ES55xz9m0/0Thh5sgx/IlVaaU2r0hScEawgiA="
+}
