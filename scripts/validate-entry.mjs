@@ -93,11 +93,14 @@ if (process.env.SKIP_NETWORK !== '1' && entry.repo && Array.isArray(entry.versio
         if (m.type !== entry.type) bad(`${v.version}: manifest type "${m.type}" != entry type "${entry.type}"`)
         if (m.apiVersion !== v.apiVersion) bad(`${v.version}: manifest apiVersion ${m.apiVersion} != entry ${v.apiVersion}`)
         if (m.nativeModules === true) bad(`${v.version}: manifest declares nativeModules:true — native modules are forbidden in v1`)
-        // egress presence when http:outbound declared
+        // egress presence when http:outbound declared. An empty egress[] is legal ONLY
+        // for an operatorEgress plugin, whose hosts an admin supplies after install.
         const perms = Array.isArray(m.permissions) ? m.permissions : []
         if (perms.some((p) => p === 'http:outbound' || p.startsWith('http:outbound:'))) {
           const egress = Array.isArray(m.egress) ? m.egress : []
-          if (!egress.length) bad(`${v.version}: http:outbound declared but egress[] is empty`)
+          if (!egress.length && m.operatorEgress !== true) {
+            bad(`${v.version}: http:outbound declared but egress[] is empty (set operatorEgress: true if the hosts are admin-supplied)`)
+          }
           if (egress.includes('*')) bad(`${v.version}: egress[] must not contain a bare "*" wildcard`)
         }
         // operatorEgress parity. This flag says the manifest's egress[] is NOT the plugin's
