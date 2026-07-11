@@ -100,6 +100,18 @@ if (process.env.SKIP_NETWORK !== '1' && entry.repo && Array.isArray(entry.versio
           if (!egress.length) bad(`${v.version}: http:outbound declared but egress[] is empty`)
           if (egress.includes('*')) bad(`${v.version}: egress[] must not contain a bare "*" wildcard`)
         }
+        // operatorEgress parity. This flag says the manifest's egress[] is NOT the plugin's
+        // full network reach — an admin may add hosts after install (a self-hosted Gotify,
+        // an ntfy). Mirroring it onto the entry, and pinning it here, means an entry can
+        // never UNDERSTATE the reach of the code at the commit it points to.
+        const mOperatorEgress = m.operatorEgress === true
+        const vOperatorEgress = v.operatorEgress === true
+        if (mOperatorEgress !== vOperatorEgress) {
+          bad(`${v.version}: manifest operatorEgress ${mOperatorEgress} != entry ${vOperatorEgress}`)
+        }
+        if (mOperatorEgress && !perms.some((p) => p === 'http:outbound' || p.startsWith('http:outbound:'))) {
+          bad(`${v.version}: operatorEgress declared without an http:outbound permission`)
+        }
         // dependency parity: the enriched entry must mirror the manifest so TREK can
         // resolve deps from the index before downloading.
         const normAddons = (a) => (Array.isArray(a) ? [...a].map(String).sort() : [])

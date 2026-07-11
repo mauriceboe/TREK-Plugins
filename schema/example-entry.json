@@ -5,7 +5,11 @@
   "description": "Live flight status widget for your trips.",
   "repo": "acme-travel/trek-flight-tracker",
   "homepage": "https://acme.example/flight-tracker",
-  "tags": ["widget", "flights", "aviation"],
+  "tags": [
+    "widget",
+    "flights",
+    "aviation"
+  ],
   "type": "widget",
   "versions": [
     {
@@ -19,10 +23,16 @@
       "size": 184320,
       "apiVersion": 1,
       "nativeModules": false,
+      "operatorEgress": false,
       "publishedAt": "2026-06-18T12:00:00Z",
-      "requiredAddons": ["budget"],
+      "requiredAddons": [
+        "budget"
+      ],
       "pluginDependencies": [
-        { "id": "koffi", "version": ">=1.0.0 <2.0.0" }
+        {
+          "id": "koffi",
+          "version": ">=1.0.0 <2.0.0"
+        }
       ]
     }
   ]
