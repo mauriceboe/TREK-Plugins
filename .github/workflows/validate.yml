@@ -1,5 +1,10 @@
 name: Validate plugin submissions
 
+# What a SUBMISSION is checked against. Red here means "this PR's entry is not publishable".
+# The gates themselves are tested separately (selftest.yml) — a failure there means the
+# validator is broken, which is a different problem with a different fix, and conflating the
+# two made a green tick ambiguous.
+
 on:
   pull_request:
     # `labeled`/`unlabeled` are here so the maintainer overrides below actually work: the
@@ -8,11 +13,10 @@ on:
     types: [opened, synchronize, reopened, labeled, unlabeled]
     paths:
       - 'registry/plugins/**'
-      # The gates themselves are load-bearing: a change to the validator, the schema or the
-      # aggregator must run CI too. Previously editing scripts/ triggered nothing at all.
-      - 'scripts/**'
-      - 'schema/**'
-      - 'build/**'
+      # dist/ is generated, and a PR must never touch it — but a PR that edits ONLY dist/
+      # would trigger no workflow at all and sail past the guard below. Trigger on it so the
+      # guard can actually fire.
+      - 'dist/**'
 
 permissions:
   contents: read
@@ -40,9 +44,6 @@ jobs:
           node-version: 20
 
       - run: npm ci
-
-      - name: Self-test the validation gates
-        run: node scripts/selftest-gates.mjs
 
       - name: Determine changed plugin entries
         id: changed
@@ -86,7 +87,7 @@ jobs:
             tag=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[0].gitTag)")
             commit=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[0].commitSha)")
 
-            # entry: schema, id, namespace, owner binding, homoglyph, release, sha, native scan
+            # entry: schema, id, namespace, owner binding, homoglyph, release, sha, signature, native scan
             node scripts/validate-entry.mjs "$f"
 
             # README: fetch the plugin's manifest at the pinned commit for permission parity
