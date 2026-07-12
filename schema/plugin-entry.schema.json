@@ -151,7 +151,8 @@
         "signature": {
           "type": "string",
           "minLength": 40,
-          "description": "Optional base64 minisign signature over the artifact bytes. Requires authorPublicKey on the entry."
+          "maxLength": 200,
+          "description": "Optional base64 minisign signature over the artifact bytes. Requires authorPublicKey on the entry — a cross-level rule the schema cannot express, enforced by scripts/validate-entry.mjs."
         },
         "publishedAt": {
           "type": "string",

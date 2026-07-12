@@ -4,6 +4,11 @@ on:
   pull_request:
     paths:
       - 'registry/plugins/**'
+      # The gates themselves are load-bearing: a change to the validator, the schema or the
+      # aggregator must run CI too. Previously editing scripts/ triggered nothing at all.
+      - 'scripts/**'
+      - 'schema/**'
+      - 'build/**'
 
 permissions:
   contents: read
@@ -32,6 +37,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Self-test the validation gates
+        run: node scripts/selftest-gates.mjs
+
       - name: Determine changed plugin entries
         id: changed
         run: |
@@ -47,6 +55,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHANGED: ${{ steps.changed.outputs.files }}
+          # Lets validate-entry.mjs read the previous entry (git show "$BASE_SHA:<path>")
+          # to catch a signed plugin shipping an unsigned or re-keyed update.
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           set -e
           while IFS= read -r f; do

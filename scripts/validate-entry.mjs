@@ -1,23 +1,26 @@
 // TREK-Plugins registry: entry validation gate.
 // Validates one registry/plugins/<id>.json: schema, id/filename, owner binding,
-// homoglyph/mixed-script, and — over the network — that the release exists, the
-// manifest matches, the artifact's SHA-256 matches the pin, and the artifact
-// contains no native binaries.
+// homoglyph/mixed-script, signature integrity, and — over the network — that the
+// release exists, the manifest matches, the artifact's SHA-256 matches the pin, the
+// author signature verifies, and the artifact contains no native binaries.
 //
 // Usage:  node scripts/validate-entry.mjs registry/plugins/<id>.json
 // Env:    ALLOW_OWNER_CHANGE=1    allow rebinding an existing id to a new owner
+//         ALLOW_KEY_CHANGE=1      allow rotating a published plugin's signing key
 //         GITHUB_TOKEN            raises GitHub API rate limits (optional)
 //         SKIP_NETWORK=1          offline mode (schema/format checks only)
+//         BASE_SHA                git ref of the PR base, for the signing-downgrade guard
 
 import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
-import { execFile } from 'node:child_process'
+import { execFile, execFileSync } from 'node:child_process'
 import { promisify } from 'node:util'
 import { tmpdir } from 'node:os'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import Ajv2020 from 'ajv/dist/2020.js'
 import addFormats from 'ajv-formats'
+import { verifyAuthorSignature, checkSignatureShape, SignatureError } from './lib/verify-signature.mjs'
 
 const pexec = promisify(execFile)
 const entryPath = process.argv[2]
@@ -61,6 +64,49 @@ if (bound) {
   }
 } // new id: publish.yml records the binding on merge.
 
+// --- signature shape (offline) ---
+// A key without a signature, or a signature without a key, passes the schema but is
+// refused by TREK at install time. Catch it here rather than merging a dead entry.
+for (const p of checkSignatureShape(entry)) bad(p)
+
+// --- signing-downgrade guard (offline) ---
+// TREK pins the author key on first install (TOFU). Once a plugin has shipped signed,
+// an unsigned update — or one signed with a different key — is REFUSED on every
+// instance that already has it (registry.service.ts: "this plugin was signed before
+// but the update is unsigned — refusing"). Nothing else in this repo notices, so a
+// downgrade merges green and then bricks the update for every existing user.
+//
+// Compare against the entry as it exists on the PR base. `git show` fails for a
+// brand-new plugin (no previous entry) — that's the opt-in case, and it's fine.
+const baseSha = process.env.BASE_SHA
+if (baseSha) {
+  let previous = null
+  try {
+    // Resolve against the repo the ENTRY lives in, not the one this script lives in — they
+    // are the same in CI, but tying the lookup to the entry keeps the guard testable.
+    const entryDir = path.dirname(path.resolve(entryPath))
+    const git = (...a) => execFileSync('git', a, { cwd: entryDir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim()
+    const repoRoot = git('rev-parse', '--show-toplevel')
+    const rel = path.relative(repoRoot, path.resolve(entryPath))
+    previous = JSON.parse(git('show', `${baseSha}:${rel}`))
+  } catch {
+    previous = null // new plugin, or unreadable base — nothing to downgrade from
+  }
+
+  if (previous?.authorPublicKey) {
+    if (!entry.authorPublicKey) {
+      bad(`"${entry.id}" was published signed but this entry drops authorPublicKey — TREK refuses an unsigned update to a signed plugin, which would break every existing install`)
+    } else if (previous.authorPublicKey !== entry.authorPublicKey && process.env.ALLOW_KEY_CHANGE !== '1') {
+      bad(`"${entry.id}" changes its authorPublicKey — TREK refuses a key rotation until an admin re-trusts the plugin. Key changes need a maintainer override.`)
+    }
+    // Every version must stay signed, not just the newest: TREK verifies whichever
+    // version it installs, so an unsigned older block is a landmine for a pinned install.
+    for (const v of entry.versions ?? []) {
+      if (!v.signature) bad(`${v.version}: "${entry.id}" is a signed plugin, but this version has no signature — TREK will refuse to install it`)
+    }
+  }
+}
+
 // --- per-version network checks ---
 const ghHeaders = { 'User-Agent': 'trek-plugins-ci', Accept: 'application/vnd.github+json' }
 if (process.env.GITHUB_TOKEN) ghHeaders.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`
@@ -91,7 +137,11 @@ if (process.env.SKIP_NETWORK !== '1' && entry.repo && Array.isArray(entry.versio
         if (m.id !== entry.id) bad(`${v.version}: manifest id "${m.id}" != entry id "${entry.id}"`)
         if (m.version !== v.version) bad(`${v.version}: manifest version "${m.version}" != entry version "${v.version}"`)
         if (m.type !== entry.type) bad(`${v.version}: manifest type "${m.type}" != entry type "${entry.type}"`)
-        if (m.apiVersion !== v.apiVersion) bad(`${v.version}: manifest apiVersion ${m.apiVersion} != entry ${v.apiVersion}`)
+        // apiVersion is optional in the manifest: TREK defaults it to 1 at install and the
+        // SDK defaults it to 1 when building the entry. Compare the DEFAULTED values, or a
+        // manifest that legally omits it fails with "manifest apiVersion undefined != entry 1".
+        const mApiVersion = m.apiVersion ?? 1
+        if (mApiVersion !== v.apiVersion) bad(`${v.version}: manifest apiVersion ${mApiVersion} != entry ${v.apiVersion}`)
         if (m.nativeModules === true) bad(`${v.version}: manifest declares nativeModules:true — native modules are forbidden in v1`)
         // egress presence when http:outbound declared. An empty egress[] is legal ONLY
         // for an operatorEgress plugin, whose hosts an admin supplies after install.
@@ -139,6 +189,22 @@ if (process.env.SKIP_NETWORK !== '1' && entry.repo && Array.isArray(entry.versio
       if (buf.length > v.size + 4096) bad(`${v.version}: artifact is larger (${buf.length}) than declared size (${v.size})`)
       const sha = createHash('sha256').update(buf).digest('hex')
       if (sha !== v.sha256) bad(`${v.version}: SHA-256 mismatch — downloaded ${sha.slice(0, 12)}…, entry pins ${v.sha256.slice(0, 12)}…`)
+
+      // Author signature over the artifact bytes. sha256 proves the bytes are what the
+      // REGISTRY vouches for; the signature proves they came from the AUTHOR's key. TREK
+      // verifies this at install and aborts on a mismatch — so a bad signature merged here
+      // is an entry nobody can install. We already have the bytes; no extra download.
+      if (v.signature && entry.authorPublicKey) {
+        try {
+          if (!verifyAuthorSignature(buf, v.signature, entry.authorPublicKey)) {
+            bad(`${v.version}: author signature does not verify against authorPublicKey — TREK will refuse this artifact`)
+          }
+        } catch (e) {
+          if (e instanceof SignatureError) bad(`${v.version}: signature/key is malformed: ${e.message}`)
+          else throw e
+        }
+      }
+
       await writeFile(file, buf)
       // list entries (zip via unzip -l, tar.gz via tar -tzf) and scan for native binaries / lifecycle scripts
       const isZip = buf[0] === 0x50 && buf[1] === 0x4b
@@ -148,7 +214,9 @@ if (process.env.SKIP_NETWORK !== '1' && entry.repo && Array.isArray(entry.versio
           ? (await pexec('unzip', ['-l', file])).stdout
           : (await pexec('tar', ['-tzf', file])).stdout
       } catch (e) { bad(`${v.version}: could not list archive (${isZip ? 'zip' : 'tar.gz'}): ${e.message}`) }
-      if (/\.node(\s|$)/m.test(listing) || /\/binding\.gyp(\s|$)/m.test(listing) || /\/prebuilds?\//.test(listing)) {
+      // Anchor on a path boundary, not a literal slash: `binding.gyp` and `prebuilds/` at the
+      // ARCHIVE ROOT have no leading slash and slipped straight through the old patterns.
+      if (/\.node(\s|$)/m.test(listing) || /(^|[/\s])binding\.gyp(\s|$)/m.test(listing) || /(^|[/\s])prebuilds?\//m.test(listing)) {
         bad(`${v.version}: artifact contains native binaries (.node / binding.gyp / prebuilds) — forbidden in v1`)
       }
     } catch (e) { bad(`${v.version}: artifact check failed: ${e.message}`) }
