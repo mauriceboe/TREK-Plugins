@@ -5,6 +5,7 @@
   "description": "Deliver your TREK notifications to a self-hosted Gotify server.",
   "repo": "jubnl/trek-gotify",
   "type": "integration",
+  "icon": "Bell",
   "versions": [
     {
       "version": "1.0.0",

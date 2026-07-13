@@ -5,6 +5,7 @@
   "description": "A collaborative in-trip hub for Japan",
   "repo": "fbnlrz/trek-x-japan",
   "type": "trip-page",
+  "icon": "Compass",
   "versions": [
     {
       "version": "1.2.0",

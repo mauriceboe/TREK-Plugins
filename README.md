@@ -66,7 +66,19 @@ manifest parity (`id`/`version`/`type`/`apiVersion`/`trek`/`operatorEgress`/`req
 downloaded artifact matches the pin** · **the author signature verifies** (see below) ·
 **no native `.node` binaries** (forbidden in v1) · `egress[]` present and non-wildcard when
 `http:outbound` is declared (an empty `egress[]` is allowed only with `operatorEgress: true`
-— see below).
+— see below) · **`icon` is a real lucide name** (see below).
+
+### The store icon
+
+An entry's optional `icon` is a [lucide](https://lucide.dev/icons) icon name in PascalCase
+(e.g. `"icon": "Luggage"`) and is what TREK draws on the plugin's tile in the store. It is
+normally the same icon your `trek-plugin.json` declares — `trek-plugin-sdk entry` (and
+`publish`) copies it across for you, so there is usually nothing to do by hand. Omit it and
+the tile falls back to a generic `Blocks` glyph.
+
+CI rejects a name lucide doesn't have. That check exists because the failure is otherwise
+silent: TREK falls back to `Blocks` on an unknown name, so a typo doesn't error anywhere —
+your plugin just looks like every other one in the store.
 
 ### TREK version compatibility
 

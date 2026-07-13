@@ -22,6 +22,7 @@ import Ajv2020 from 'ajv/dist/2020.js'
 import addFormats from 'ajv-formats'
 import { verifyAuthorSignature, checkSignatureShape, SignatureError } from './lib/verify-signature.mjs'
 import { satisfiableRange, trekFloor } from './lib/trek-range.mjs'
+import { LUCIDE_ICON_NAMES } from './lib/lucide-icon-names.mjs'
 
 const pexec = promisify(execFile)
 const entryPath = process.argv[2]
@@ -45,6 +46,14 @@ if (!validate(entry)) for (const e of validate.errors) bad(`schema: ${e.instance
 // --- id === filename ---
 const fileId = path.basename(entryPath).replace(/\.json$/, '')
 if (entry.id && entry.id !== fileId) bad(`id "${entry.id}" must equal filename "${fileId}"`)
+
+// --- icon ---
+// TREK resolves `icon` against lucide at render time and falls back to Blocks on a name
+// it can't find, so a typo is invisible in the store — it just looks like every other
+// plugin. The schema pins the shape; this pins the name to one lucide actually has.
+if (entry.icon && !LUCIDE_ICON_NAMES.has(entry.icon)) {
+  bad(`icon "${entry.icon}" is not a lucide icon name — TREK would fall back to Blocks. See https://lucide.dev/icons`)
+}
 
 // --- homoglyph / mixed-script name ---
 // Reject a name that mixes Latin with Cyrillic/Greek look-alikes (spoofing).

@@ -5,6 +5,7 @@
   "description": "Tally every Famichiki you eat on your trip — FamilyMart Japan's legendary fried-chicken snack, counted right on your dashboard.",
   "repo": "fbnlrz/trekichiki",
   "type": "widget",
+  "icon": "Drumstick",
   "versions": [
     {
       "version": "1.0.3",

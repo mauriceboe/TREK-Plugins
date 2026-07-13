@@ -160,6 +160,32 @@ expect('a well-formed signed entry passes', runGate(baseEntry()), true)
   expect('an entry whose manifest omits apiVersion passes (offline shape)', runGate(e), true)
 }
 
+// --- icon ---
+//
+// TREK falls back to Blocks on an icon name lucide doesn't have, so a typo is invisible
+// in the store: the tile just looks like every other plugin. The gate is the only place
+// it can be caught.
+{
+  const e = baseEntry()
+  e.icon = 'Luggage'
+  expect('an entry with a real lucide icon passes', runGate(e), true)
+}
+{
+  const e = baseEntry()
+  delete e.icon
+  expect('an entry with no icon passes (optional; TREK defaults to Blocks)', runGate(e), true)
+}
+{
+  const e = baseEntry()
+  e.icon = 'Luggagee'
+  expect('an entry with a typo\'d icon name fails', runGate(e), false, 'is not a lucide icon name')
+}
+{
+  const e = baseEntry()
+  e.icon = 'luggage'
+  expect('a lowercase icon name fails the schema pattern', runGate(e), false, 'pattern')
+}
+
 // --- the maintainer overrides ---
 //
 // These are the ONLY way through the two gates that protect existing installs, and

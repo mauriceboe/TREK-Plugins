@@ -5,6 +5,7 @@
   "description": "Every open to-do from all your trips, together on the dashboard and sorted by due date — overdue first — so nothing slips through the cracks.",
   "repo": "mauriceboe/trek-plugin-trip-todos",
   "type": "widget",
+  "icon": "ListTodo",
   "versions": [
     {
       "version": "1.0.0",

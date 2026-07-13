@@ -52,6 +52,11 @@
       },
       "maxItems": 8
     },
+    "icon": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*$",
+      "description": "A lucide icon name in PascalCase (e.g. \"Luggage\"), shown on the plugin's tile in TREK's store. Usually the same icon the plugin's trek-plugin.json declares. Omit to get the default (Blocks). CI rejects a name lucide doesn't have."
+    },
     "type": {
       "enum": [
         "integration",

@@ -5,6 +5,7 @@
   "description": "Shows nearby Wikipedia articles right inside a place's detail view. Search once to link a location, then it's remembered for that place.",
   "repo": "raduwolf12/wiki-place-context",
   "type": "widget",
+  "icon": "BookOpen",
   "versions": [
     {
       "version": "1.0.0",

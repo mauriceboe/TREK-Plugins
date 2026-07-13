@@ -11,6 +11,7 @@
     "fun"
   ],
   "type": "widget",
+  "icon": "Luggage",
   "versions": [
     {
       "version": "1.0.1",

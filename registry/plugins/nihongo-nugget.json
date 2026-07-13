@@ -5,6 +5,7 @@
   "description": "A daily bite-sized Japanese travel phrase on your dashboard — reading, translation, and a tap to save your favourites. Fully local, no API.",
   "repo": "fbnlrz/nihongo-nugget",
   "type": "widget",
+  "icon": "Languages",
   "versions": [
     {
       "version": "1.0.0",
