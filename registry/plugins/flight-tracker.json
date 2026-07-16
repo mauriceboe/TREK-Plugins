@@ -7,21 +7,19 @@
   "type": "widget",
   "versions": [
     {
-      "version": "1.7.0",
-      "gitTag": "v1.7.0",
-      "commitSha": "d0618cfe59c110172a84d034dd3da41908597c63",
-      "downloadUrl": "https://github.com/fbnlrz/trek-track/releases/download/v1.7.0/plugin.zip",
-      "sha256": "262aa1a0b80fff34223b0797eec36557559f51b15599a41427a5b55e18e5b50e",
+      "version": "1.7.5",
+      "gitTag": "v1.7.5",
+      "commitSha": "b5db93afaaaf1deef35ae221e84acbb8fa221a1e",
+      "downloadUrl": "https://github.com/fbnlrz/trek-track/releases/download/v1.7.5/plugin.zip",
+      "sha256": "980c81d261f1eaf601d526735d7b08e0bebf3c801e683d2364c00891ed63f403",
       "minTrekVersion": "3.3.0",
-      "size": 78163,
+      "size": 78776,
       "apiVersion": 1,
       "nativeModules": false,
-      "publishedAt": "2026-07-14T20:47:37.808Z",
-      "signature": "1bQqzEBoGcmflZexMbjTyQh7tFnshTK9wBIzEcb62jGZejyHvGsLy3L+/WmOPbKbU47ZJrc5OY9segZtsDx3Cw=="
+      "publishedAt": "2026-07-15T17:00:09.907Z",
+      "signature": "VMl4asrbM6pbN3h+9Db5lIqzfvO8kIv1PboEBk1s3Usq6FtzWWhVwhWGnaeSS/70ZBlXAYgCR/t342jyvLovAw=="
     }
   ],
   "homepage": "https://github.com/fbnlrz/trek-track",
-  "authorPublicKey": "DJDfduAyHs2Ja/xhOyMkbCAcreMZZyKuz70PqTyfYM0=",
-  "reviewedAt": "2026-07-15",
-  "boundOwner": "fbnlrz"
+  "authorPublicKey": "DJDfduAyHs2Ja/xhOyMkbCAcreMZZyKuz70PqTyfYM0="
 }
