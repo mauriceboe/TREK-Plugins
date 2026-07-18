@@ -50,6 +50,11 @@
       "boundOwner": "mauriceboe",
       "repo": "mauriceboe/trek-plugin-trip-todos",
       "firstReviewedAt": "2026-07-11"
+    },
+    "flight-tracker": {
+      "boundOwner": "fbnlrz",
+      "repo": "fbnlrz/trek-track",
+      "firstReviewedAt": "2026-07-15"
     }
   }
 }

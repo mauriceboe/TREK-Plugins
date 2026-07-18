@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-13T06:32:21.133Z",
+  "generatedAt": "2026-07-18T05:38:18.375Z",
   "plugins": [
     {
       "id": "budget-table",
@@ -28,7 +28,35 @@
       ],
       "reviewedAt": "2026-07-06",
       "boundOwner": "jubnl",
-      "downloadCount": 140
+      "downloadCount": 190
+    },
+    {
+      "id": "flight-tracker",
+      "name": "Flight Tracker",
+      "author": "fbnlrz",
+      "description": "Live flight status, schedule and airborne position for a flight reservation, from AeroDataBox and adsb.fi.",
+      "repo": "fbnlrz/trek-track",
+      "type": "widget",
+      "versions": [
+        {
+          "version": "1.7.6",
+          "gitTag": "v1.7.6",
+          "commitSha": "cbbb0f26b043b071c3d19e1839df342337046840",
+          "downloadUrl": "https://github.com/fbnlrz/trek-track/releases/download/v1.7.6/plugin.zip",
+          "sha256": "f911217b3b9aa97ee90b51991ac886d8e68a2083b9a164f1ab8fac44882ef299",
+          "minTrekVersion": "3.3.0",
+          "size": 79543,
+          "apiVersion": 1,
+          "nativeModules": false,
+          "publishedAt": "2026-07-16T18:01:27.630Z",
+          "signature": "Vmy3J4Sx9Q5YIASfaimuI/bAZ0unRvbZtDzdUK4jseDFzftAO4FemAv6zV8F3BCmDYvcaCq6ZXVy3tErVipEDQ=="
+        }
+      ],
+      "homepage": "https://github.com/fbnlrz/trek-track",
+      "authorPublicKey": "DJDfduAyHs2Ja/xhOyMkbCAcreMZZyKuz70PqTyfYM0=",
+      "reviewedAt": "2026-07-16",
+      "boundOwner": "fbnlrz",
+      "downloadCount": 110
     },
     {
       "id": "koffi",
@@ -73,7 +101,7 @@
       ],
       "reviewedAt": "2026-07-04",
       "boundOwner": "mauriceboe",
-      "downloadCount": 199
+      "downloadCount": 226
     },
     {
       "id": "nihongo-nugget",
@@ -99,7 +127,7 @@
       "homepage": "https://github.com/fbnlrz/nihongo-nugget",
       "reviewedAt": "2026-07-05",
       "boundOwner": "fbnlrz",
-      "downloadCount": 54
+      "downloadCount": 70
     },
     {
       "id": "suica-saver",
@@ -127,7 +155,7 @@
       "authorPublicKey": "kdvtL1DEM+p49J1eVKTwDl//BFzRFJcOtkDoc0Ay2bM=",
       "reviewedAt": "2026-07-06",
       "boundOwner": "fbnlrz",
-      "downloadCount": 45
+      "downloadCount": 58
     },
     {
       "id": "trek-gotify",
@@ -156,7 +184,7 @@
       "authorPublicKey": "YgFVo9ES55xz9m0/0Thh5sgx/IlVaaU2r0hScEawgiA=",
       "reviewedAt": "2026-07-11",
       "boundOwner": "jubnl",
-      "downloadCount": 19
+      "downloadCount": 29
     },
     {
       "id": "trek-x-japan",
@@ -194,7 +222,7 @@
       "homepage": "https://github.com/fbnlrz/trek-x-japan",
       "reviewedAt": "2026-07-07",
       "boundOwner": "fbnlrz",
-      "downloadCount": 129
+      "downloadCount": 168
     },
     {
       "id": "trekichiki",
@@ -256,7 +284,7 @@
       "homepage": "https://github.com/fbnlrz/trekichiki",
       "reviewedAt": "2026-07-07",
       "boundOwner": "fbnlrz",
-      "downloadCount": 70
+      "downloadCount": 86
     },
     {
       "id": "trip-todos",
@@ -284,7 +312,7 @@
       "authorPublicKey": "4QeCOm8gMfcoZdjIznao2KV10NSS7u/0AYn+6FA6/Oo=",
       "reviewedAt": "2026-07-11",
       "boundOwner": "mauriceboe",
-      "downloadCount": 77
+      "downloadCount": 166
     },
     {
       "id": "wiki-place-context",
@@ -310,7 +338,7 @@
       "homepage": "https://github.com/raduwolf12/wiki-place-context",
       "reviewedAt": "2026-07-10",
       "boundOwner": "raduwolf12",
-      "downloadCount": 138
+      "downloadCount": 243
     }
   ]
 }
