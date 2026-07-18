@@ -1,15 +1,15 @@
 {
-  "id": "vox",
+  "id": "trek-vox-plugin",
   "name": "Vox",
   "author": "MaximeCn",
-  "description": "A collaborative voting plugin for TREK that helps groups decide on trip activities. Create events linked to trip locations, collect 1–5 ratings from participants, and automatically compute average scores and a participation-aware consensus index. A unified summary view highlights the most agreed-upon options per location with full vote transparency.",
+  "description": "A collaborative voting plugin for TREK. Create events linked to trip locations, collect 1–5 ratings, and compute average scores plus a participation-aware consensus index.",
   "repo": "MaximeCn/trek-vox-plugin",
   "type": "trip-page",
   "versions": [
     {
       "version": "1.0.0",
       "gitTag": "v1.0.0",
-      "commitSha": "038332254a53e4d8ed25c0d9a2e5d87dded1b097",
+      "commitSha": "5b259299ee773020f350f9ae630b5bbc1dc8236f",
       "downloadUrl": "https://github.com/MaximeCn/trek-vox-plugin/releases/download/v1.0.0/plugin.zip",
       "sha256": "a7f8a09e6e9abeb4244735fbb102868fffba35ba7ebd9ecba121e204c6639db6",
       "minTrekVersion": "3.2.0",
