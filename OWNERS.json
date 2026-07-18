@@ -50,6 +50,11 @@
       "boundOwner": "fbnlrz",
       "repo": "fbnlrz/trek-track",
       "firstReviewedAt": "2026-07-15"
+    },
+    "reservations": {
+      "boundOwner": "geracobo",
+      "repo": "geracobo/trek-plugin-reservations",
+      "firstReviewedAt": "2026-07-18"
     }
   }
 }

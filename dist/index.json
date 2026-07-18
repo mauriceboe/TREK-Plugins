@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-18T20:11:45.877Z",
+  "generatedAt": "2026-07-18T21:57:50.012Z",
   "plugins": [
     {
       "id": "budget-table",
@@ -136,6 +136,33 @@
       "reviewedAt": "2026-07-18",
       "boundOwner": "fbnlrz",
       "downloadCount": 70
+    },
+    {
+      "id": "reservations",
+      "name": "Reservations",
+      "author": "geracobo",
+      "description": "Enhanced reservation views for transportation and bookings",
+      "repo": "geracobo/trek-plugin-reservations",
+      "type": "trip-page",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "gitTag": "v0.1.0",
+          "commitSha": "86133d7a61b7b63dc51aafd2aeb85d1257e1df70",
+          "downloadUrl": "https://github.com/geracobo/trek-plugin-reservations/releases/download/v0.1.0/plugin.zip",
+          "sha256": "e56129179f3db28f7ef1a8029e748af4b290bf2cb0e6f5e7284e899f4a4a653f",
+          "trek": ">=3.3.0 <4.0.0",
+          "size": 346864,
+          "apiVersion": 1,
+          "nativeModules": false,
+          "publishedAt": "2026-07-16T00:14:51.694Z",
+          "signature": "iysVPqiaZBcCiYrgdWHugQa+GgqNbHB190bFkMGqqNy80zBNwTQmcHfTVAFb2pCqp0nGFokfgPS3tUdx5On2CQ=="
+        }
+      ],
+      "homepage": "https://github.com/geracobo/trek-plugin-reservations",
+      "authorPublicKey": "ydD/02TVm0yR4mkvmsUmstBO+PJLzl1Wkei2EDbkSeM=",
+      "reviewedAt": "2026-07-18",
+      "boundOwner": "geracobo"
     },
     {
       "id": "suica-saver",
