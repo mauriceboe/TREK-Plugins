@@ -1,9 +1,26 @@
 name: Validate plugin submissions
 
+# What a SUBMISSION is checked against. Red here means "this PR's entry is not publishable".
+# The gates themselves are tested separately (selftest.yml) — a failure there means the
+# validator is broken, which is a different problem with a different fix, and conflating the
+# two made a green tick ambiguous.
+
 on:
   pull_request:
+    # `labeled`/`unlabeled` are here so the maintainer overrides below actually work: the
+    # default trigger types don't include them, so applying the label would leave the failed
+    # run sitting there red and a maintainer would have to push an empty commit to re-run.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     paths:
       - 'registry/plugins/**'
+      # dist/ is generated, and a PR must never touch it — but a PR that edits ONLY dist/
+      # would trigger no workflow at all and sail past the guard below. Trigger on it so the
+      # guard can actually fire.
+      - 'dist/**'
+      # OWNERS.json is the id→owner trust anchor the owner-binding gate reads. A PR that
+      # edits ONLY it used to run no CI at all — the one file whose silent rewrite defeats
+      # the binding would merge unchecked. Trigger on it so the OWNERS gate below can fire.
+      - 'OWNERS.json'
 
 permissions:
   contents: read
@@ -18,11 +35,54 @@ jobs:
         with:
           fetch-depth: 0
 
+      # `github.event.pull_request.base.sha` is pinned when the PR is OPENED and goes stale the
+      # moment the base branch moves. HEAD here is the MERGE ref, so it already contains those
+      # newer base commits — and a `base.sha...HEAD` diff then attributes them to this PR. The
+      # stats cron commits dist/ to main, so any PR open when it lands would fail the dist/ guard
+      # below for a change it never made (and pick up someone else's entry as "changed").
+      # Resolve the CURRENT base tip instead; every step below diffs against that.
+      #
+      # Submissions arrive from FORKS: checkout clones this (base) repo and checks out the PR's
+      # merge ref, so `origin` is upstream and base.ref is upstream's branch — both resolve fine
+      # for a fork PR. Fail loudly if they don't: an empty BASE_SHA would diff HEAD...HEAD, which
+      # silently waves through a dist/ edit AND validates no entry at all. `bash -e` does not
+      # catch that on its own (the failing $(...) sits inside a successful echo).
+      - name: Resolve the base branch tip
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          git fetch --no-tags origin "$BASE_REF"
+          base="$(git merge-base FETCH_HEAD HEAD)"
+          if [ -z "$base" ]; then
+            echo "::error::could not resolve the tip of the base branch ($BASE_REF) — refusing to run with an empty diff base."
+            exit 1
+          fi
+          echo "BASE_SHA=$base" >> "$GITHUB_ENV"
+
       - name: Reject changes to dist/ (generated)
         run: |
-          base="${{ github.event.pull_request.base.sha }}"
-          if git diff --name-only "$base"...HEAD | grep -q '^dist/'; then
+          if git diff --name-only "$BASE_SHA"...HEAD | grep -q '^dist/'; then
             echo "::error::Do not edit dist/ — it is generated on merge by publish.yml."
+            exit 1
+          fi
+
+      # Deleting an entry is not a routine submission: it unlists the plugin for every TREK
+      # instance, and — worse — a LATER PR re-adding the same id would otherwise look brand
+      # new, resetting the signing-downgrade baseline (validate-entry.mjs guards against the
+      # resurrection too, via base-branch history, but the removal itself still deserves a
+      # human decision). Same override mechanism as the other two gates: a label, because a
+      # fork contributor cannot apply one. `--no-renames` so a renamed-away entry counts as
+      # the removal of its old id — a rename changes the id (id must equal the filename),
+      # which IS a remove-plus-add.
+      - name: Reject entry removals without a maintainer override
+        env:
+          ALLOW_REMOVAL: ${{ contains(github.event.pull_request.labels.*.name, 'allow-removal') && '1' || '' }}
+        run: |
+          removed=$(git diff --name-only --no-renames --diff-filter=D "$BASE_SHA"...HEAD -- 'registry/plugins/*.json' || true)
+          if [ -n "$removed" ] && [ -z "$ALLOW_REMOVAL" ]; then
+            echo "$removed" | while IFS= read -r f; do
+              echo "::error::This PR removes $f — deleting (or renaming) a registry entry needs a maintainer to apply the allow-removal label."
+            done
             exit 1
           fi
 
@@ -32,11 +92,28 @@ jobs:
 
       - run: npm ci
 
+      # OWNERS.json is maintained by publish.yml on merge; a manual edit is the exceptional
+      # case (a deliberate owner change, or cleaning up a stale binding) and reuses the same
+      # override the owner-binding gate has, because that is exactly what such an edit is.
+      # The shape check runs on EVERY PR — it is cheap, and it means nothing that reaches
+      # this workflow can leave the trust anchor unreadable or pointing at ids that never
+      # existed.
+      - name: Validate OWNERS.json (owner bindings)
+        env:
+          ALLOW_OWNER_CHANGE: ${{ contains(github.event.pull_request.labels.*.name, 'allow-owner-change') && '1' || '' }}
+        run: |
+          if git diff --name-only "$BASE_SHA"...HEAD -- OWNERS.json | grep -q . && [ -z "$ALLOW_OWNER_CHANGE" ]; then
+            echo "::error::This PR edits OWNERS.json — the owner-binding trust anchor is written by publish.yml on merge; a manual edit needs a maintainer to apply the allow-owner-change label."
+            exit 1
+          fi
+          node scripts/validate-owners.mjs
+
       - name: Determine changed plugin entries
         id: changed
         run: |
-          base="${{ github.event.pull_request.base.sha }}"
-          files=$(git diff --name-only --diff-filter=ACM "$base"...HEAD -- 'registry/plugins/*.json' || true)
+          # ACMR, not ACM: a RENAMED entry file is still a submission — with rename detection
+          # on and R excluded, a rename validated zero entries and merged unchecked.
+          files=$(git diff --name-only --diff-filter=ACMR "$BASE_SHA"...HEAD -- 'registry/plugins/*.json' || true)
           echo "files<<EOF" >> "$GITHUB_OUTPUT"
           echo "$files" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -47,6 +124,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHANGED: ${{ steps.changed.outputs.files }}
+          # BASE_SHA (the resolved base tip, from GITHUB_ENV above) lets validate-entry.mjs read
+          # the previous entry (git show "$BASE_SHA:<path>") to catch a signed plugin shipping an
+          # unsigned or re-keyed update — against what is on the base branch NOW, so a signing
+          # downgrade can't slip through by landing another release while this PR sits open.
+          # --- maintainer overrides ---
+          # Two gates protect existing installs rather than the submission itself, so each
+          # has a legitimate escape hatch — a real repo transfer, a genuinely rotated key.
+          #
+          # A LABEL is the mechanism precisely because a PR author cannot apply one: labelling
+          # needs triage/write permission on this repo, which a fork contributor does not have.
+          # So the override cannot be self-served, which is the whole meaning of "maintainer
+          # override". (Do NOT move these to something the PR branch controls — a file in the
+          # PR, a commit-message token — or the author overrides their own gate.)
+          #
+          # Applying the label re-runs this workflow (see `types:` above) and the gate passes.
+          ALLOW_KEY_CHANGE: ${{ contains(github.event.pull_request.labels.*.name, 'allow-key-change') && '1' || '' }}
+          ALLOW_OWNER_CHANGE: ${{ contains(github.event.pull_request.labels.*.name, 'allow-owner-change') && '1' || '' }}
         run: |
           set -e
           while IFS= read -r f; do
@@ -58,7 +152,7 @@ jobs:
             tag=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[0].gitTag)")
             commit=$(node -e "const v=JSON.parse(require('fs').readFileSync('$f','utf8')).versions;console.log(v[0].commitSha)")
 
-            # entry: schema, id, namespace, owner binding, homoglyph, release, sha, native scan
+            # entry: schema, id, namespace, owner binding, homoglyph, release, sha, signature, native scan
             node scripts/validate-entry.mjs "$f"
 
             # README: fetch the plugin's manifest at the pinned commit for permission parity

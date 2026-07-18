@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-12T06:15:06.186Z",
+  "generatedAt": "2026-07-18T20:11:45.877Z",
   "plugins": [
     {
       "id": "budget-table",
@@ -16,6 +16,7 @@
           "commitSha": "7169ab9732b5c3c1dd8eec49b46abb208f4496de",
           "downloadUrl": "https://github.com/jubnl/Trek_Plugin-Budget_Table/releases/download/v1.0.0/plugin.zip",
           "sha256": "dd20ebddd33c344594fadcb42f350f41d9e0dac495637c63d49f0da86bfeac29",
+          "trek": ">=3.2.1 <4.0.0",
           "minTrekVersion": "3.2.1",
           "size": 24141,
           "apiVersion": 1,
@@ -26,9 +27,39 @@
           ]
         }
       ],
-      "reviewedAt": "2026-07-06",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "jubnl",
-      "downloadCount": 114
+      "downloadCount": 190
+    },
+    {
+      "id": "flight-tracker",
+      "name": "Flight Tracker",
+      "author": "fbnlrz",
+      "description": "Live flight status, schedule and airborne position for a flight reservation, from AeroDataBox and adsb.fi.",
+      "repo": "fbnlrz/trek-track",
+      "type": "widget",
+      "icon": "Plane",
+      "versions": [
+        {
+          "version": "1.7.6",
+          "gitTag": "v1.7.6",
+          "commitSha": "cbbb0f26b043b071c3d19e1839df342337046840",
+          "downloadUrl": "https://github.com/fbnlrz/trek-track/releases/download/v1.7.6/plugin.zip",
+          "sha256": "f911217b3b9aa97ee90b51991ac886d8e68a2083b9a164f1ab8fac44882ef299",
+          "trek": ">=3.3.0 <4.0.0",
+          "minTrekVersion": "3.3.0",
+          "size": 79543,
+          "apiVersion": 1,
+          "nativeModules": false,
+          "publishedAt": "2026-07-16T18:01:27.630Z",
+          "signature": "Vmy3J4Sx9Q5YIASfaimuI/bAZ0unRvbZtDzdUK4jseDFzftAO4FemAv6zV8F3BCmDYvcaCq6ZXVy3tErVipEDQ=="
+        }
+      ],
+      "homepage": "https://github.com/fbnlrz/trek-track",
+      "authorPublicKey": "DJDfduAyHs2Ja/xhOyMkbCAcreMZZyKuz70PqTyfYM0=",
+      "reviewedAt": "2026-07-18",
+      "boundOwner": "fbnlrz",
+      "downloadCount": 110
     },
     {
       "id": "koffi",
@@ -43,6 +74,7 @@
         "fun"
       ],
       "type": "widget",
+      "icon": "Luggage",
       "versions": [
         {
           "version": "1.0.1",
@@ -50,6 +82,7 @@
           "commitSha": "fedcf81d2fc13a331fdfa49662fcbef9c3d51fb8",
           "downloadUrl": "https://github.com/mauriceboe/trek-plugin-koffi/releases/download/v1.0.1/plugin.zip",
           "sha256": "bb475f519769c757a6e28f00ae8cf1ef401c512d4dc39c65589ce8743d2c1315",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "maxTrekVersion": null,
           "size": 943257,
@@ -63,6 +96,7 @@
           "commitSha": "749db9fb2e229f3f36dbfc2d81e33a821a55c359",
           "downloadUrl": "https://github.com/mauriceboe/trek-plugin-koffi/releases/download/v1.0.0/plugin.zip",
           "sha256": "3172d9b240ef4de3b0c2465a9f59096bd01cb6af93527580af8445fab0f1752c",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "maxTrekVersion": null,
           "size": 215481,
@@ -71,9 +105,9 @@
           "publishedAt": "2026-07-03T00:00:00Z"
         }
       ],
-      "reviewedAt": "2026-07-04",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "mauriceboe",
-      "downloadCount": 177
+      "downloadCount": 226
     },
     {
       "id": "nihongo-nugget",
@@ -82,6 +116,7 @@
       "description": "A daily bite-sized Japanese travel phrase on your dashboard — reading, translation, and a tap to save your favourites. Fully local, no API.",
       "repo": "fbnlrz/nihongo-nugget",
       "type": "widget",
+      "icon": "Languages",
       "versions": [
         {
           "version": "1.0.0",
@@ -89,6 +124,7 @@
           "commitSha": "0eac0fc6c7b3dc2e608ae54b397fd6f504fdbe51",
           "downloadUrl": "https://github.com/fbnlrz/nihongo-nugget/releases/download/v1.0.0/plugin.zip",
           "sha256": "ed03f19dad87d57982c7e3bae69a8a915e786b55556faeebda8cda000257e9d6",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "size": 18163,
           "apiVersion": 1,
@@ -97,9 +133,9 @@
         }
       ],
       "homepage": "https://github.com/fbnlrz/nihongo-nugget",
-      "reviewedAt": "2026-07-05",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "fbnlrz",
-      "downloadCount": 45
+      "downloadCount": 70
     },
     {
       "id": "suica-saver",
@@ -108,6 +144,7 @@
       "description": "Track your Suica/Pasmo/ICOCA balance manually: book charges and spends, get warned before it runs low.",
       "repo": "fbnlrz/suica-saver",
       "type": "widget",
+      "icon": "Wallet",
       "versions": [
         {
           "version": "1.0.0",
@@ -115,6 +152,7 @@
           "commitSha": "e7c4fc1f7dfcf3ebe447b5a9544e75e7b5831ce7",
           "downloadUrl": "https://github.com/fbnlrz/suica-saver/releases/download/v1.0.0/plugin.zip",
           "sha256": "80ea36258ac700c07ad06f38354e55aed7bb5702aa4638602a01cfb306c890e0",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "size": 9972,
           "apiVersion": 1,
@@ -125,9 +163,9 @@
       ],
       "homepage": "https://github.com/fbnlrz/suica-saver",
       "authorPublicKey": "kdvtL1DEM+p49J1eVKTwDl//BFzRFJcOtkDoc0Ay2bM=",
-      "reviewedAt": "2026-07-06",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "fbnlrz",
-      "downloadCount": 34
+      "downloadCount": 58
     },
     {
       "id": "trek-gotify",
@@ -136,6 +174,7 @@
       "description": "Deliver your TREK notifications to a self-hosted Gotify server.",
       "repo": "jubnl/trek-gotify",
       "type": "integration",
+      "icon": "Bell",
       "versions": [
         {
           "version": "1.0.0",
@@ -143,6 +182,7 @@
           "commitSha": "628aa6b0b647c5357391ebe00d3df013ae1e8138",
           "downloadUrl": "https://github.com/jubnl/trek-gotify/releases/download/v1.0.0/plugin.zip",
           "sha256": "4790b777c68921615405013dab51eaf29b2050081280f2b9d6ee139e441d07e3",
+          "trek": ">=3.3.0 <4.0.0",
           "minTrekVersion": "3.3.0",
           "size": 5622,
           "apiVersion": 1,
@@ -154,9 +194,9 @@
       ],
       "homepage": "https://github.com/jubnl/trek-gotify",
       "authorPublicKey": "YgFVo9ES55xz9m0/0Thh5sgx/IlVaaU2r0hScEawgiA=",
-      "reviewedAt": "2026-07-11",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "jubnl",
-      "downloadCount": 10
+      "downloadCount": 29
     },
     {
       "id": "trek-x-japan",
@@ -165,6 +205,7 @@
       "description": "A collaborative in-trip hub for Japan",
       "repo": "fbnlrz/trek-x-japan",
       "type": "trip-page",
+      "icon": "Compass",
       "versions": [
         {
           "version": "1.2.0",
@@ -172,6 +213,7 @@
           "commitSha": "df8c977e42b1bad85f4afae78820490f64f05f77",
           "downloadUrl": "https://github.com/fbnlrz/trek-x-japan/releases/download/v1.2.0/plugin.zip",
           "sha256": "5ba9a187c3fa5c5721a943b84b39eca96383ef0331cc73bc944f30bf5f2a0562",
+          "trek": ">=3.2.1 <4.0.0",
           "minTrekVersion": "3.2.1",
           "size": 79830,
           "apiVersion": 1,
@@ -184,6 +226,7 @@
           "commitSha": "2fc6d0d5c96411da2c20d52a87a3342ac8f989ad",
           "downloadUrl": "https://github.com/fbnlrz/trek-x-japan/releases/download/v1.0.0/plugin.zip",
           "sha256": "2fa3530fc2811c1ac69aca7678cb9adde76d936655b5fe89c2e8d0e06356576e",
+          "trek": ">=3.2.1 <4.0.0",
           "minTrekVersion": "3.2.1",
           "size": 54581,
           "apiVersion": 1,
@@ -192,9 +235,9 @@
         }
       ],
       "homepage": "https://github.com/fbnlrz/trek-x-japan",
-      "reviewedAt": "2026-07-07",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "fbnlrz",
-      "downloadCount": 104
+      "downloadCount": 168
     },
     {
       "id": "trekichiki",
@@ -203,6 +246,7 @@
       "description": "Tally every Famichiki you eat on your trip — FamilyMart Japan's legendary fried-chicken snack, counted right on your dashboard.",
       "repo": "fbnlrz/trekichiki",
       "type": "widget",
+      "icon": "Drumstick",
       "versions": [
         {
           "version": "1.0.3",
@@ -210,6 +254,7 @@
           "commitSha": "4bbbe1608d116b9bd3bf335ce81252e5e64c1083",
           "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.3/plugin.zip",
           "sha256": "6bf5c54f249722bab81b1837a82aafa503b93fb58fd2a8bdd90791a8f5c1eb05",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "size": 10934,
           "apiVersion": 1,
@@ -222,6 +267,7 @@
           "commitSha": "d77ae277ba7df7d298795cc6aaf929e777875e45",
           "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.2/plugin.zip",
           "sha256": "9a076adfc499d0cbd846994437ee9dcd3efa7524d3c4683ee8638c4894618995",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "size": 10111,
           "apiVersion": 1,
@@ -234,6 +280,7 @@
           "commitSha": "fc6c6db401cbadd244a94280b59c26fa7c6effee",
           "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.1/plugin.zip",
           "sha256": "5f31ee6726141ce37ddd22bd5f04d68e8e1878fb8b1232bab47cbf149e8071f3",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "size": 9573,
           "apiVersion": 1,
@@ -246,6 +293,7 @@
           "commitSha": "667b155255920d1f8b96d17815a261f46fa2c309",
           "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.0/plugin.zip",
           "sha256": "25314b8654da3383d0c85800d59ec516bc5a246e7172b712635a06690d2c98e3",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "size": 9506,
           "apiVersion": 1,
@@ -254,9 +302,9 @@
         }
       ],
       "homepage": "https://github.com/fbnlrz/trekichiki",
-      "reviewedAt": "2026-07-07",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "fbnlrz",
-      "downloadCount": 49
+      "downloadCount": 86
     },
     {
       "id": "trip-todos",
@@ -265,6 +313,7 @@
       "description": "Every open to-do from all your trips, together on the dashboard and sorted by due date — overdue first — so nothing slips through the cracks.",
       "repo": "mauriceboe/trek-plugin-trip-todos",
       "type": "widget",
+      "icon": "ListTodo",
       "versions": [
         {
           "version": "1.0.0",
@@ -272,6 +321,7 @@
           "commitSha": "d2864dded856ffc721ea95a3e42e02ef256ecf5e",
           "downloadUrl": "https://github.com/mauriceboe/trek-plugin-trip-todos/releases/download/v1.0.0/plugin.zip",
           "sha256": "cb2b5a545583d36c811a8d5f60aec2319d39904fd1b9dbdf9c219f54d9e2b8a2",
+          "trek": ">=3.3.0 <4.0.0",
           "minTrekVersion": "3.3.0",
           "size": 18095,
           "apiVersion": 1,
@@ -282,9 +332,9 @@
       ],
       "homepage": "https://github.com/mauriceboe/trek-plugin-trip-todos",
       "authorPublicKey": "4QeCOm8gMfcoZdjIznao2KV10NSS7u/0AYn+6FA6/Oo=",
-      "reviewedAt": "2026-07-11",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "mauriceboe",
-      "downloadCount": 16
+      "downloadCount": 166
     },
     {
       "id": "wiki-place-context",
@@ -293,6 +343,7 @@
       "description": "Shows nearby Wikipedia articles right inside a place's detail view. Search once to link a location, then it's remembered for that place.",
       "repo": "raduwolf12/wiki-place-context",
       "type": "widget",
+      "icon": "BookOpen",
       "versions": [
         {
           "version": "1.0.0",
@@ -300,6 +351,7 @@
           "commitSha": "900bda7ffdf8da38bac9da4f7112fd108fec63a1",
           "downloadUrl": "https://github.com/raduwolf12/wiki-place-context/releases/download/v1.0.0/plugin.zip",
           "sha256": "c92e514dc5a6274680547282abed58c0aeb85bfc6a56c7394aa93ad254aadad7",
+          "trek": ">=3.2.0 <4.0.0",
           "minTrekVersion": "3.2.0",
           "size": 13962,
           "apiVersion": 1,
@@ -308,9 +360,9 @@
         }
       ],
       "homepage": "https://github.com/raduwolf12/wiki-place-context",
-      "reviewedAt": "2026-07-10",
+      "reviewedAt": "2026-07-18",
       "boundOwner": "raduwolf12",
-      "downloadCount": 82
+      "downloadCount": 243
     }
   ]
 }

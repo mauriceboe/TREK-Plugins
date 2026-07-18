@@ -5,6 +5,7 @@
   "description": "Every open to-do from all your trips, together on the dashboard and sorted by due date — overdue first — so nothing slips through the cracks.",
   "repo": "mauriceboe/trek-plugin-trip-todos",
   "type": "widget",
+  "icon": "ListTodo",
   "versions": [
     {
       "version": "1.0.0",
@@ -12,6 +13,7 @@
       "commitSha": "d2864dded856ffc721ea95a3e42e02ef256ecf5e",
       "downloadUrl": "https://github.com/mauriceboe/trek-plugin-trip-todos/releases/download/v1.0.0/plugin.zip",
       "sha256": "cb2b5a545583d36c811a8d5f60aec2319d39904fd1b9dbdf9c219f54d9e2b8a2",
+      "trek": ">=3.3.0 <4.0.0",
       "minTrekVersion": "3.3.0",
       "size": 18095,
       "apiVersion": 1,
@@ -22,6 +24,6 @@
   ],
   "homepage": "https://github.com/mauriceboe/trek-plugin-trip-todos",
   "authorPublicKey": "4QeCOm8gMfcoZdjIznao2KV10NSS7u/0AYn+6FA6/Oo=",
-  "reviewedAt": "2026-07-11",
+  "reviewedAt": "2026-07-18",
   "boundOwner": "mauriceboe"
 }

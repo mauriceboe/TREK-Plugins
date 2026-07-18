@@ -11,6 +11,7 @@
     "aviation"
   ],
   "type": "widget",
+  "icon": "Plane",
   "versions": [
     {
       "version": "1.0.0",
@@ -18,8 +19,7 @@
       "commitSha": "0000000000000000000000000000000000000000",
       "downloadUrl": "https://github.com/acme-travel/trek-flight-tracker/releases/download/v1.0.0/plugin.zip",
       "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-      "minTrekVersion": "3.2.0",
-      "maxTrekVersion": null,
+      "trek": ">=3.2.0 <4.0.0",
       "size": 184320,
       "apiVersion": 1,
       "nativeModules": false,

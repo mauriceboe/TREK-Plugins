@@ -61,14 +61,111 @@ and [Publishing a Plugin](https://github.com/mauriceboe/TREK/wiki/Plugin-Publish
 **Entry** (`scripts/validate-entry.mjs`): JSON schema · `id` matches filename and
 is a valid slug · **owner/repo binding** (an existing plugin id can't be repointed
 to a different owner) · homoglyph / mixed-script names blocked · release tag exists ·
-manifest parity (`id`/`version`/`type`/`apiVersion`/`operatorEgress` match) · **SHA-256
-of the downloaded artifact matches the pin** · **no native `.node` binaries** (forbidden
-in v1) · `egress[]` present and non-wildcard when `http:outbound` is declared (an empty
-`egress[]` is allowed only with `operatorEgress: true` — see below).
+manifest parity (`id`/`version`/`type`/`apiVersion`/`trek`/`operatorEgress`/`requiredAddons`/
+`pluginDependencies` match) · **the TREK version range** (see below) · **SHA-256 of the
+downloaded artifact matches the pin** · **the author signature verifies** (see below) ·
+**no native `.node` binaries** (forbidden in v1) · `egress[]` present and non-wildcard when
+`http:outbound` is declared (an empty `egress[]` is allowed only with `operatorEgress: true`
+— see below) · **`icon` is a real lucide name** (see below).
 
-An author signature (`signature` + `authorPublicKey`) may be supplied and is carried in
-the index, but **CI does not verify it** — TREK pins the key on first install (TOFU) and
-checks it client-side.
+### The store icon
+
+An entry's optional `icon` is a [lucide](https://lucide.dev/icons) icon name in PascalCase
+(e.g. `"icon": "Luggage"`) and is what TREK draws on the plugin's tile in the store. It is
+normally the same icon your `trek-plugin.json` declares — `trek-plugin-sdk entry` (and
+`publish`) copies it across for you, so there is usually nothing to do by hand. Omit it and
+the tile falls back to a generic `Blocks` glyph.
+
+CI rejects a name lucide doesn't have. That check exists because the failure is otherwise
+silent: TREK falls back to `Blocks` on an unknown name, so a typo doesn't error anywhere —
+your plugin just looks like every other one in the store.
+
+### TREK version compatibility
+
+Your manifest's **`trek`** field is the semver **range** of TREK versions your plugin
+supports (`">=3.2.0 <4.0.0"`). Since TREK 3.4.0 it is **load-bearing, not advisory**: TREK
+refuses to install a plugin whose range excludes the running version, and refuses to
+*activate* one it has since outgrown — so a plugin that ships without a range, or with the
+wrong one, is simply uninstallable.
+
+CI therefore requires it on the version you are publishing, and pins it to the truth:
+
+- the manifest must declare a **satisfiable** range (`">=4.0.0 <3.0.0"` is valid semver and
+  satisfiable by nothing — it is rejected);
+- the entry's `trek` must equal the manifest's, verbatim.
+
+`trek-plugin entry` fills it in for you; don't write it by hand.
+
+**`trek` is the only compatibility field a new entry needs.** `minTrekVersion` and
+`maxTrekVersion` are the older shape and are **deprecated** — the first said nothing the
+range doesn't already say, and neither can express the exclusive upper bound that is the
+whole point of `<4.0.0`. Don't set them. They are still accepted (and CI checks a floor,
+if present, agrees with the range) so that entries published before `trek` existed keep
+validating, and so a TREK predating `trek` still has something to read. Versions published
+before the field existed are likewise grandfathered: CI won't demand a range from a commit
+that predates it.
+
+### Signing
+
+Signing is **optional**. An unsigned plugin installs on its SHA-256 pin alone, exactly as
+before — the pin proves the bytes are what the *registry* vouches for. A signature proves
+they came from the *author*, so a compromised registry cannot ship code under your name
+without also stealing your key. Sign with `npx trek-plugin-sdk publish --sign` (or `keygen` + `entry --sign`), 
+which emits a per-version `signature` and the entry's `authorPublicKey`.
+
+If you supply them, **CI verifies them** — it is not merely carrying them through to the
+index:
+
+- **Shape** — a key without any signed version, or a signature without a key, is refused.
+  TREK will not install a half-signed entry (`incomplete signature: an author key and a
+  version signature must both be present`), so merging one ships an entry nobody can use.
+- **Signature** — the signature is verified against the downloaded artifact bytes with the
+  same verifier TREK uses at install (`scripts/lib/verify-signature.mjs` is a port of the
+  host's `install/verify-signature.ts`, and must stay behaviourally identical). A signature
+  CI accepts but the host would reject is an entry that bricks the update for everyone who
+  already has the plugin.
+- **No signing downgrade** — TREK pins the author key on **first install** (trust-on-first-use).
+  Once a plugin has shipped signed, an update that drops the key, drops a version's signature,
+  or is signed with a *different* key is refused on every instance that already has it. CI
+  compares against the entry on the PR base and blocks all three. An entry **absent** from the
+  base is compared against its last published state in the base branch's *history*, if it has
+  one — so deleting a plugin and re-adding it later does not reset the baseline, and an
+  unsigned or re-keyed resurrection of a previously-signed id is caught like any other
+  downgrade.
+
+Rotating a key is therefore not a routine release: every existing install stops updating
+until an admin explicitly **re-trusts** the new key in TREK's admin UI (TREK ≥ 3.4.0 shows
+both fingerprints and asks them to confirm the new one with you out of band).
+
+### Maintainer overrides
+
+Some gates protect *existing installs* (or the registry itself) rather than the submission,
+so each has an escape hatch — for a real repo transfer, a genuinely rotated key, a plugin
+that really is being retired. A maintainer opens them by applying a **label** to the PR:
+
+| Label | Lifts | Use when |
+|---|---|---|
+| `allow-key-change` | `authorPublicKey` differs from the entry on the PR base (or, for a re-added id, from its last published state) | The author rotated their signing key, or lost it and made a new one |
+| `allow-owner-change` | The entry's repo owner differs from the `id`'s binding in [`OWNERS.json`](./OWNERS.json) — and any manual edit to `OWNERS.json` itself | The plugin genuinely moved to a new owner or org |
+| `allow-removal` | The PR deletes (or renames away) a `registry/plugins/*.json` entry | The plugin is genuinely being unlisted or renamed — a maintainer decision, never a routine submission |
+
+Applying the label re-runs the validation workflow, and the gate passes. Removing it puts
+the gate back.
+
+`OWNERS.json` is written by `publish.yml` on merge and is validated on every PR: it must
+keep the exact `id → { boundOwner, repo, firstReviewedAt }` shape, and every bound id must
+map to a registry entry — or to the tombstone of one that was deliberately removed (the
+binding of a deleted plugin is kept so nobody else can claim its id). Editing it by hand
+is the exceptional case and needs the `allow-owner-change` label.
+
+It is a label rather than anything in the PR itself **on purpose**: labelling requires
+triage/write permission on this repo, which a fork contributor does not have — so an author
+cannot wave their own PR through. Do not expect a magic string in a commit message or a file
+in the branch to work; a submitter controls those, which would defeat the point.
+
+The other two signing-downgrade cases — **dropping** the key, or shipping a version with no
+signature — have **no override at all**. They are not recoverable: TREK refuses those updates
+on every instance that already has the plugin, so merging one is simply a broken entry.
 
 ### `operatorEgress`
 

@@ -5,6 +5,7 @@
   "description": "Tally every Famichiki you eat on your trip — FamilyMart Japan's legendary fried-chicken snack, counted right on your dashboard.",
   "repo": "fbnlrz/trekichiki",
   "type": "widget",
+  "icon": "Drumstick",
   "versions": [
     {
       "version": "1.0.3",
@@ -12,6 +13,7 @@
       "commitSha": "4bbbe1608d116b9bd3bf335ce81252e5e64c1083",
       "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.3/plugin.zip",
       "sha256": "6bf5c54f249722bab81b1837a82aafa503b93fb58fd2a8bdd90791a8f5c1eb05",
+      "trek": ">=3.2.0 <4.0.0",
       "minTrekVersion": "3.2.0",
       "size": 10934,
       "apiVersion": 1,
@@ -24,6 +26,7 @@
       "commitSha": "d77ae277ba7df7d298795cc6aaf929e777875e45",
       "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.2/plugin.zip",
       "sha256": "9a076adfc499d0cbd846994437ee9dcd3efa7524d3c4683ee8638c4894618995",
+      "trek": ">=3.2.0 <4.0.0",
       "minTrekVersion": "3.2.0",
       "size": 10111,
       "apiVersion": 1,
@@ -36,6 +39,7 @@
       "commitSha": "fc6c6db401cbadd244a94280b59c26fa7c6effee",
       "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.1/plugin.zip",
       "sha256": "5f31ee6726141ce37ddd22bd5f04d68e8e1878fb8b1232bab47cbf149e8071f3",
+      "trek": ">=3.2.0 <4.0.0",
       "minTrekVersion": "3.2.0",
       "size": 9573,
       "apiVersion": 1,
@@ -48,6 +52,7 @@
       "commitSha": "667b155255920d1f8b96d17815a261f46fa2c309",
       "downloadUrl": "https://github.com/fbnlrz/trekichiki/releases/download/v1.0.0/plugin.zip",
       "sha256": "25314b8654da3383d0c85800d59ec516bc5a246e7172b712635a06690d2c98e3",
+      "trek": ">=3.2.0 <4.0.0",
       "minTrekVersion": "3.2.0",
       "size": 9506,
       "apiVersion": 1,
@@ -56,6 +61,6 @@
     }
   ],
   "homepage": "https://github.com/fbnlrz/trekichiki",
-  "reviewedAt": "2026-07-07",
+  "reviewedAt": "2026-07-18",
   "boundOwner": "fbnlrz"
 }

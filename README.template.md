@@ -54,7 +54,8 @@ to get an API key, any external account needed. If there is no setup, say so.}}
 
 ## Compatibility
 
-- Requires **TREK {{>=3.2.0}}**.
+- Requires **TREK {{>=3.2.0 <4.0.0}}** — state the same range as your manifest's `trek`
+  field. TREK enforces it: it will not install or activate this plugin outside that range.
 - {{Any other requirement: an external service, a paid API tier, etc.}}
 
 ## Support

@@ -1,11 +1,6 @@
 {
   "_comment": "id -> { boundOwner, repo, firstReviewedAt }. Maintained by publish.yml on merge. Do not hand-edit except for a deliberate owner-change override.",
   "plugins": {
-    "trip-countdown": {
-      "boundOwner": "mauriceboe",
-      "repo": "mauriceboe/trek-plugin-trip-countdown",
-      "firstReviewedAt": "2026-07-03"
-    },
     "koffi": {
       "boundOwner": "mauriceboe",
       "repo": "mauriceboe/trek-plugin-koffi",
@@ -50,6 +45,11 @@
       "boundOwner": "mauriceboe",
       "repo": "mauriceboe/trek-plugin-trip-todos",
       "firstReviewedAt": "2026-07-11"
+    },
+    "flight-tracker": {
+      "boundOwner": "fbnlrz",
+      "repo": "fbnlrz/trek-track",
+      "firstReviewedAt": "2026-07-15"
     }
   }
 }
