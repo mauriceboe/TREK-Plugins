@@ -8,6 +8,20 @@
   "icon": "Bell",
   "versions": [
     {
+      "version": "1.0.1",
+      "gitTag": "v1.0.1",
+      "commitSha": "eeb325ea6b5d1f89bf257e8437319877e3a3fe5d",
+      "downloadUrl": "https://github.com/jubnl/trek-gotify/releases/download/v1.0.1/plugin.zip",
+      "sha256": "07af2f7c3be8ad28a0dc763069ad6bd2cb8a8a4841f828ae0010bea58b482923",
+      "trek": ">=3.3.0 <4.0.0",
+      "size": 6760,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-19T11:17:23.448Z",
+      "operatorEgress": true,
+      "signature": "d0PkHKB+7JI7uuPGjfYSMpPcUNq3s79/96qK82HuW/DVc1D2ce0GcYvbvagmxaE5vH6LyvsNcXDHJxhatQnfBQ=="
+    },
+    {
       "version": "1.0.0",
       "gitTag": "v1.0.0",
       "commitSha": "628aa6b0b647c5357391ebe00d3df013ae1e8138",
