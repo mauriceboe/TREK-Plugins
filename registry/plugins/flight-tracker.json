@@ -8,6 +8,19 @@
   "icon": "Plane",
   "versions": [
     {
+      "version": "1.8.0",
+      "gitTag": "v1.8.0",
+      "commitSha": "6e31aaa56abedc590e2e6bc113ea722b737b529b",
+      "downloadUrl": "https://github.com/fbnlrz/trek-track/releases/download/v1.8.0/plugin.zip",
+      "sha256": "cbc5faea57bcdd941411e9dfef455307761fcca49df18713781b8fdea86171a8",
+      "trek": ">=3.4.0 <4.0.0",
+      "size": 116121,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-19T00:48:15.855Z",
+      "signature": "Jp6MN7CQLv2k+vmJfRQULQUD4kVbgzo3z6diT7y07stg4v9zeVwxBi0Y7CaNlk8NwOPZsGD+1+95xPv+1np0CQ=="
+    },
+    {
       "version": "1.7.6",
       "gitTag": "v1.7.6",
       "commitSha": "cbbb0f26b043b071c3d19e1839df342337046840",
