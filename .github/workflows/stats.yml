@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   stats:
+    if: github.event.repository.fork != true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

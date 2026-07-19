@@ -12,6 +12,7 @@
       "commitSha": "7169ab9732b5c3c1dd8eec49b46abb208f4496de",
       "downloadUrl": "https://github.com/jubnl/Trek_Plugin-Budget_Table/releases/download/v1.0.0/plugin.zip",
       "sha256": "dd20ebddd33c344594fadcb42f350f41d9e0dac495637c63d49f0da86bfeac29",
+      "trek": ">=3.2.1 <4.0.0",
       "minTrekVersion": "3.2.1",
       "size": 24141,
       "apiVersion": 1,
@@ -22,6 +23,6 @@
       ]
     }
   ],
-  "reviewedAt": "2026-07-06",
+  "reviewedAt": "2026-07-18",
   "boundOwner": "jubnl"
 }

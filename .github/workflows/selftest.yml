@@ -1,0 +1,67 @@
+name: Self-test the validation gates
+
+# Tests the TOOLING, not a submission. Red here means "the validator itself is broken" —
+# which is strictly more serious than a bad entry, because validate-entry.mjs is the only
+# thing standing between a malicious PR and every TREK instance in the world, and nothing
+# else in this repo would notice if it silently stopped gating.
+#
+# Kept separate from validate.yml on purpose: these two answer different questions, fail for
+# different reasons, and are fixed by different people. A single combined tick could not say
+# which had gone wrong.
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'schema/**'
+      - 'build/**'
+      # A change to this workflow must run this workflow — otherwise breaking the gate's own
+      # CI is the one edit that never gets checked.
+      - '.github/workflows/selftest.yml'
+  # Also on merge: a change can only reach main through a PR that ran the above, but a bad
+  # merge resolution can still land something neither side tested.
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'schema/**'
+      - 'build/**'
+
+permissions:
+  contents: read
+
+jobs:
+  selftest:
+    if: github.event.repository.fork != true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      # The gates: each must fire on the bad entry it exists to stop, must NOT fire on a
+      # legitimate one, and the two maintainer overrides must genuinely open the two gates
+      # they claim to. Offline (SKIP_NETWORK=1) — no network, no rate limits, seconds to run.
+      - name: Gate self-tests
+        run: node scripts/selftest-gates.mjs
+
+      # The aggregator is what actually produces the file every TREK instance downloads. If it
+      # throws, or stops being deterministic, dist/index.json is not reproducible from the
+      # entries — so run it twice and require byte-identical output modulo the timestamp.
+      - name: Aggregator is deterministic
+        run: |
+          node build/aggregate.mjs
+          a=$(grep -v '"generatedAt"' dist/index.json | sha256sum)
+          node build/aggregate.mjs
+          b=$(grep -v '"generatedAt"' dist/index.json | sha256sum)
+          git checkout -- dist/ || true
+          if [ "$a" != "$b" ]; then
+            echo "::error::build/aggregate.mjs is not deterministic — dist/index.json differs between runs."
+            exit 1
+          fi
+          echo "aggregate.mjs is deterministic."

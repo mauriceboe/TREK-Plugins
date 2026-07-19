@@ -1,0 +1,13 @@
+# The validation tooling is the only thing standing between a bad PR and every
+# TREK instance in the world — and a submission PR that also edits it would be
+# validated by its own modified gate. Require a registry maintainer's review on
+# everything the gates are made of; a plugin submission touches none of these.
+
+/scripts/    @jubnl @mauriceboe @subdee
+/schema/     @jubnl @mauriceboe @subdee
+/build/      @jubnl @mauriceboe @subdee
+/.github/    @jubnl @mauriceboe @subdee
+
+# The id -> owner trust anchor. Written by publish.yml on merge; a manual edit
+# is a deliberate owner change and needs a maintainer anyway (see validate.yml).
+/OWNERS.json @jubnl @mauriceboe @subdee

@@ -2,89 +2,97 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/mauriceboe/TREK-Plugins/schema/plugin-entry.schema.json",
   "title": "TREK plugin registry entry",
-  "description": "One registry/plugins/<id>.json file. reviewedAt and boundOwner are maintained by CI/publish and may be omitted by submitters.",
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "id",
-    "name",
-    "author",
-    "description",
-    "repo",
-    "type",
-    "versions"
-  ],
-  "properties": {
-    "id": {
-      "type": "string",
-      "pattern": "^[a-z][a-z0-9-]{2,39}$",
-      "description": "Unique slug. Must equal the filename (without .json)."
-    },
-    "name": {
-      "type": "string",
-      "minLength": 2,
-      "maxLength": 60
-    },
-    "author": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 80
-    },
-    "description": {
-      "type": "string",
-      "minLength": 5,
-      "maxLength": 200
-    },
-    "repo": {
-      "type": "string",
-      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
-      "description": "GitHub owner/name. Source of truth for the plugin code."
-    },
-    "homepage": {
-      "type": "string",
-      "format": "uri"
-    },
-    "tags": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^[a-z0-9-]{2,24}$"
-      },
-      "maxItems": 8
-    },
-    "type": {
-      "enum": [
-        "integration",
-        "page",
-        "widget",
-        "trip-page"
-      ]
-    },
-    "reviewedAt": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "format": "date"
-    },
-    "boundOwner": {
-      "type": "string"
-    },
-    "authorPublicKey": {
-      "type": "string",
-      "minLength": 40,
-      "maxLength": 120,
-      "description": "Optional base64 minisign (Ed25519) public key. Stable across versions; TREK pins it on first install (TOFU)."
-    },
-    "versions": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "$ref": "#/$defs/version"
-      }
-    }
-  },
+  "description": "One registry/plugins/<id>.json file. reviewedAt and boundOwner are maintained by CI/publish and may be omitted by submitters. Submissions are strict: no fields beyond $defs/entry. The published dist/index.json additionally carries a CI-computed downloadCount per entry — that shape is described by registry.schema.json, never by a submission.",
+  "$ref": "#/$defs/entry",
+  "unevaluatedProperties": false,
   "$defs": {
+    "entry": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "author",
+        "description",
+        "repo",
+        "type",
+        "versions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{2,39}$",
+          "description": "Unique slug. Must equal the filename (without .json)."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 60
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "description": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "repo": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "description": "GitHub owner/name. Source of truth for the plugin code."
+        },
+        "homepage": {
+          "type": "string",
+          "format": "uri"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]{2,24}$"
+          },
+          "maxItems": 8
+        },
+        "icon": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9]*$",
+          "description": "A lucide icon name in PascalCase (e.g. \"Luggage\"), shown on the plugin's tile in TREK's store. Usually the same icon the plugin's trek-plugin.json declares. Omit to get the default (Blocks). CI rejects a name lucide doesn't have."
+        },
+        "type": {
+          "enum": [
+            "integration",
+            "page",
+            "widget",
+            "trip-page"
+          ]
+        },
+        "reviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "boundOwner": {
+          "type": "string"
+        },
+        "authorPublicKey": {
+          "type": "string",
+          "minLength": 40,
+          "maxLength": 120,
+          "description": "Optional base64 minisign (Ed25519) public key. Stable across versions; TREK pins it on first install (TOFU)."
+        },
+        "versions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/version"
+          }
+        }
+      }
+    },
     "version": {
       "type": "object",
       "additionalProperties": false,
@@ -94,7 +102,6 @@
         "commitSha",
         "downloadUrl",
         "sha256",
-        "minTrekVersion",
         "size",
         "apiVersion",
         "nativeModules"
@@ -120,16 +127,27 @@
           "type": "string",
           "pattern": "^[0-9a-f]{64}$"
         },
-        "minTrekVersion": {
+        "trek": {
           "type": "string",
-          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "The TREK versions this version supports, as a semver RANGE (e.g. \">=3.2.0 <4.0.0\"). Mirrors the plugin manifest's `trek` field verbatim, and is the ONLY compatibility field a new entry needs — it is what TREK gates installs and activation on. Optional in the schema only so entries published before it existed still validate; scripts/validate-entry.mjs REQUIRES it on the version being published."
+        },
+        "minTrekVersion": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$",
+          "description": "DEPRECATED — superseded by `trek`, which says the same thing and can also express an upper bound. Do not set it on a new entry. It is the range's lower bound, and survives only so that a TREK predating `trek` has something to read; TREK >= 3.4.0 ignores it whenever `trek` is present. If you do set it, CI enforces that it equals the lower bound of `trek` — the two must never disagree."
         },
         "maxTrekVersion": {
           "type": [
             "string",
             "null"
           ],
-          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$",
+          "description": "Legacy INCLUSIVE upper bound. Never derived from `trek` (which is exclusive at its top end, so synthesising one would be off by one) — prefer `trek`."
         },
         "size": {
           "type": "integer",
@@ -151,7 +169,8 @@
         "signature": {
           "type": "string",
           "minLength": 40,
-          "description": "Optional base64 minisign signature over the artifact bytes. Requires authorPublicKey on the entry."
+          "maxLength": 200,
+          "description": "Optional base64 minisign signature over the artifact bytes. Requires authorPublicKey on the entry — a cross-level rule the schema cannot express, enforced by scripts/validate-entry.mjs."
         },
         "publishedAt": {
           "type": "string",

@@ -7,11 +7,13 @@
   "scripts": {
     "aggregate": "node build/aggregate.mjs",
     "validate:entry": "node scripts/validate-entry.mjs",
-    "check:readme": "node scripts/check-readme.mjs"
+    "check:readme": "node scripts/check-readme.mjs",
+    "test:gates": "node scripts/selftest-gates.mjs"
   },
   "dependencies": {
     "ajv": "^8.20.0",
-    "ajv-formats": "^3.0.1"
+    "ajv-formats": "^3.0.1",
+    "semver": "^7.8.5"
   },
   "license": "MIT"
 }

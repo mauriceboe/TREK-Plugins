@@ -10,7 +10,18 @@
     "generatedAt": { "type": "string", "format": "date-time" },
     "plugins": {
       "type": "array",
-      "items": { "$ref": "plugin-entry.schema.json" }
+      "items": {
+        "$comment": "A published entry is a submitted registry/plugins entry plus the CI-computed downloadCount. downloadCount exists ONLY here: build/aggregate.mjs injects it from registry/stats.json, and scripts/validate-entry.mjs rejects it in a submission.",
+        "allOf": [{ "$ref": "plugin-entry.schema.json#/$defs/entry" }],
+        "properties": {
+          "downloadCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Total release-asset downloads, injected by build/aggregate.mjs from registry/stats.json."
+          }
+        },
+        "unevaluatedProperties": false
+      }
     }
   }
 }

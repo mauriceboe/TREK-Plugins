@@ -5,6 +5,7 @@
   "description": "Track your Suica/Pasmo/ICOCA balance manually: book charges and spends, get warned before it runs low.",
   "repo": "fbnlrz/suica-saver",
   "type": "widget",
+  "icon": "Wallet",
   "versions": [
     {
       "version": "1.0.0",
@@ -12,6 +13,7 @@
       "commitSha": "e7c4fc1f7dfcf3ebe447b5a9544e75e7b5831ce7",
       "downloadUrl": "https://github.com/fbnlrz/suica-saver/releases/download/v1.0.0/plugin.zip",
       "sha256": "80ea36258ac700c07ad06f38354e55aed7bb5702aa4638602a01cfb306c890e0",
+      "trek": ">=3.2.0 <4.0.0",
       "minTrekVersion": "3.2.0",
       "size": 9972,
       "apiVersion": 1,
@@ -22,6 +24,6 @@
   ],
   "homepage": "https://github.com/fbnlrz/suica-saver",
   "authorPublicKey": "kdvtL1DEM+p49J1eVKTwDl//BFzRFJcOtkDoc0Ay2bM=",
-  "reviewedAt": "2026-07-06",
+  "reviewedAt": "2026-07-18",
   "boundOwner": "fbnlrz"
 }

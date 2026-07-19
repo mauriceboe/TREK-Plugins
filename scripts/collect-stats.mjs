@@ -27,9 +27,18 @@ for (const entry of entries) {
     const res = await fetch(`https://api.github.com/repos/${entry.repo}/releases?per_page=100`, { headers })
     if (!res.ok) throw new Error(`releases ${res.status}`)
     const releases = await res.json()
+    // Count the assets this entry actually points at. `pack --out` lets an author name the
+    // artifact anything, so hardcoding "plugin.zip" silently reported zero forever for them.
+    // The downloadUrl is the pinned truth — take its basename.
+    const assetNames = new Set(
+      (entry.versions || [])
+        .map((v) => { try { return decodeURIComponent(new URL(v.downloadUrl).pathname.split('/').pop() || '') } catch { return '' } })
+        .filter(Boolean),
+    )
+    if (!assetNames.size) assetNames.add('plugin.zip')
     const count = releases
       .flatMap((r) => r.assets || [])
-      .filter((a) => a.name === 'plugin.zip')
+      .filter((a) => assetNames.has(a.name))
       .reduce((sum, a) => sum + (a.download_count || 0), 0)
     plugins[entry.id] = count
     console.log(`${entry.id}: ${count}`)

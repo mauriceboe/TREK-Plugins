@@ -5,6 +5,7 @@
   "description": "A daily bite-sized Japanese travel phrase on your dashboard — reading, translation, and a tap to save your favourites. Fully local, no API.",
   "repo": "fbnlrz/nihongo-nugget",
   "type": "widget",
+  "icon": "Languages",
   "versions": [
     {
       "version": "1.0.0",
@@ -12,6 +13,7 @@
       "commitSha": "0eac0fc6c7b3dc2e608ae54b397fd6f504fdbe51",
       "downloadUrl": "https://github.com/fbnlrz/nihongo-nugget/releases/download/v1.0.0/plugin.zip",
       "sha256": "ed03f19dad87d57982c7e3bae69a8a915e786b55556faeebda8cda000257e9d6",
+      "trek": ">=3.2.0 <4.0.0",
       "minTrekVersion": "3.2.0",
       "size": 18163,
       "apiVersion": 1,
@@ -20,6 +22,6 @@
     }
   ],
   "homepage": "https://github.com/fbnlrz/nihongo-nugget",
-  "reviewedAt": "2026-07-05",
+  "reviewedAt": "2026-07-18",
   "boundOwner": "fbnlrz"
 }
