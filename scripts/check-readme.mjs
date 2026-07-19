@@ -1,7 +1,7 @@
 // TREK-Plugins registry: README quality gate.
 // Fetches a submitted plugin's README.md at its pinned commit and enforces that
-// it is genuinely filled in — real prose, a resolving screenshot, all required
-// sections, no template placeholders, and permission parity with the manifest.
+// it is genuinely filled in — real prose, the docs/screenshot.png store cover,
+// all required sections, no template placeholders, and permission parity.
 //
 // Usage (from validate.yml, per changed registry/plugins/<id>.json):
 //   node scripts/check-readme.mjs <owner/repo> <commitSha> <path-to-manifest.json>
@@ -67,29 +67,19 @@ if (prose.length < MIN_PROSE_CHARS) {
   note(`README has too little written content (${prose.length} chars, need >= ${MIN_PROSE_CHARS}). Fill in the sections.`)
 }
 
-// 5. At least one screenshot that ACTUALLY resolves and is an image
-const mdImgs = [...readme.matchAll(/!\[[^\]]*\]\(\s*([^)\s]+)/g)].map((m) => m[1])
-const htmlImgs = [...readme.matchAll(/<img[^>]+src\s*=\s*["']([^"']+)["']/gi)].map((m) => m[1])
-const imgs = [...new Set([...mdImgs, ...htmlImgs])].filter((u) => !u.startsWith('data:'))
-if (imgs.length === 0) {
-  note('README contains no screenshots. At least one image of the plugin is required.')
-} else {
-  let anyOk = false
-  const reasons = []
-  for (const src of imgs) {
-    const url = /^https?:\/\//.test(src)
-      ? (src.includes('github.com') && src.includes('/blob/') ? src.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/') : src)
-      : RAW(src) // relative path -> resolve against the pinned commit
-    try {
-      const r = await fetch(url, { method: 'GET', headers: { Range: 'bytes=0-2047' } })
-      const ct = r.headers.get('content-type') || ''
-      if (r.ok && ct.startsWith('image/')) { anyOk = true; break }
-      reasons.push(`${src} -> ${r.status} ${ct || 'no content-type'}`)
-    } catch (e) {
-      reasons.push(`${src} -> unreachable`)
-    }
+// 5. The store cover: docs/screenshot.png must exist at the pinned commit and be
+// a real image. The TREK store loads exactly this path at the reviewed commit
+// (raw.../<commit>/docs/screenshot.png), so a README that only links other image
+// names renders a blank card despite "having screenshots" — enforce the exact
+// file the store reads, not just any image.
+try {
+  const r = await fetch(RAW('docs/screenshot.png'), { method: 'GET', headers: { Range: 'bytes=0-2047' } })
+  const ct = r.headers.get('content-type') || ''
+  if (!r.ok || !ct.startsWith('image/')) {
+    note(`docs/screenshot.png does not resolve to an image at ${commitSha.slice(0, 8)} (got ${r.status} ${ct || 'no content-type'}). This exact file is the store cover — run \`npx trek-plugin shot\` to generate it, commit it, and re-pin the entry to that commit.`)
   }
-  if (!anyOk) note('no screenshot resolved to a real image:\n    ' + reasons.join('\n    '))
+} catch {
+  note(`docs/screenshot.png is unreachable at ${commitSha.slice(0, 8)}. This exact file is the store cover — run \`npx trek-plugin shot\` to generate it and commit it.`)
 }
 
 // 6. Permission parity — every manifest permission must be mentioned in the README

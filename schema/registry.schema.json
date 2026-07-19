@@ -11,13 +11,18 @@
     "plugins": {
       "type": "array",
       "items": {
-        "$comment": "A published entry is a submitted registry/plugins entry plus the CI-computed downloadCount. downloadCount exists ONLY here: build/aggregate.mjs injects it from registry/stats.json, and scripts/validate-entry.mjs rejects it in a submission.",
+        "$comment": "A published entry is a submitted registry/plugins entry plus CI-computed fields. downloadCount and screenshotUrl exist ONLY here: build/aggregate.mjs injects them (from registry/stats.json and by resolving the cover image at the latest commit), and scripts/validate-entry.mjs rejects them in a submission.",
         "allOf": [{ "$ref": "plugin-entry.schema.json#/$defs/entry" }],
         "properties": {
           "downloadCount": {
             "type": "integer",
             "minimum": 0,
             "description": "Total release-asset downloads, injected by build/aggregate.mjs from registry/stats.json."
+          },
+          "screenshotUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Store cover image, resolved at build time by build/aggregate.mjs at the latest version's commit: docs/screenshot.png if it exists there, else the first README image that resolves. Absent when nothing resolved (the TREK server then constructs its own docs/screenshot.png URL)."
           }
         },
         "unevaluatedProperties": false
