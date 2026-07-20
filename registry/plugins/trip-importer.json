@@ -1,0 +1,23 @@
+{
+  "id": "trip-importer",
+  "name": "Trip Importer",
+  "author": "raduwolf12",
+  "description": "Reconstruct past trips from Polarsteps, GPS photos, booking PDFs/ICS, expense CSVs and Google Timeline — auto-creates the trip, journal, places, bookings and costs, with multi-trip detection and undo.",
+  "repo": "raduwolf12/trip-importer",
+  "type": "page",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "gitTag": "v1.0.0",
+      "commitSha": "a008ec401ee8363e8d0ab758da240896c07ead28",
+      "downloadUrl": "https://github.com/raduwolf12/trip-importer/releases/download/v1.0.0/plugin.zip",
+      "sha256": "4965317ca31804702dc98af5f823b100c9fc76b08692f189da51f83351275b81",
+      "trek": ">=3.4.0 <4.0.0",
+      "size": 521183,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-20T21:59:57.814Z"
+    }
+  ],
+  "icon": "PackageOpen"
+}
