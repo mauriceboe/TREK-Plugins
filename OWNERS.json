@@ -70,6 +70,11 @@
       "boundOwner": "raduwolf12",
       "repo": "raduwolf12/trip-importer",
       "firstReviewedAt": "2026-07-21"
+    },
+    "featured-guides": {
+      "boundOwner": "raduwolf12",
+      "repo": "raduwolf12/featured-guides",
+      "firstReviewedAt": "2026-07-22"
     }
   }
 }
