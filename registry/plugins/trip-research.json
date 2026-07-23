@@ -7,6 +7,18 @@
   "type": "trip-page",
   "versions": [
     {
+      "version": "1.1.0",
+      "gitTag": "v1.1.0",
+      "commitSha": "7019442450aeb9bc59e87d8ca279cb7eb6ffb984",
+      "downloadUrl": "https://github.com/raduwolf12/trip-research/releases/download/v1.1.0/plugin.zip",
+      "sha256": "350cff08766be67de64765dee5ba2a6c74cbd7bc981d9e938888aadf1bd01f2a",
+      "trek": ">=3.3.0 <4.0.0",
+      "size": 75102,
+      "apiVersion": 1,
+      "nativeModules": false,
+      "publishedAt": "2026-07-23T17:33:02.537Z"
+    },
+    {
       "version": "1.0.4",
       "gitTag": "v1.0.4",
       "commitSha": "fddadf0e205c0952aaf210d3112764b5bb9939b6",
